@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>name</key>
+		<string>Utility</string>
+		<key>array</key>
+		<array>
+			<dict>
+				<key>value</key>
+				<string>网络监测</string>
+				<key>class</key>
+				<string>KYSNetReachabilityViewController</string>
+			</dict>
+			<dict>
+				<key>value</key>
+				<string>自定义定时器</string>
+				<key>class</key>
+				<string>KYSTimerViewController</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>UICategory</string>
+		<key>array</key>
+		<array>
+			<dict>
+				<key>value</key>
+				<string>毛玻璃、水印</string>
+				<key>class</key>
+				<string>KYSImageBlurMaskViewController</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>LayerAnimation</string>
+		<key>array</key>
+		<array>
+			<dict>
+				<key>value</key>
+				<string>动画</string>
+				<key>class</key>
+				<string>KYSSampleViewController</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>UI</string>
+		<key>array</key>
+		<array>
+			<dict>
+				<key>value</key>
+				<string>监听回退按钮</string>
+				<key>class</key>
+				<string>KYSMYUIViewController</string>
+			</dict>
+		</array>
+	</dict>
+</array>
+</plist>

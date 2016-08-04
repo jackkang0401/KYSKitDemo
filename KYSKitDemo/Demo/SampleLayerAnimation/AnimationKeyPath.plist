@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>transform</string>
+	<string>transform.rotation</string>
+	<string>transform.rotation.x</string>
+	<string>transform.rotation.y</string>
+	<string>transform.rotation.z</string>
+	<string>transform.scale</string>
+	<string>transform.scale.x</string>
+	<string>transform.scale.y</string>
+	<string>transform.scale.z</string>
+	<string>position</string>
+	<string>position.x</string>
+	<string>position.y</string>
+	<string>backgroundColor</string>
+	<string>opacity</string>
+	<string>cornerRadius</string>
+	<string>borderWidth</string>
+	<string>contents</string>
+	<string>contentsRect</string>
+	<string>bounds</string>
+	<string>shadowColor</string>
+	<string>shadowOffset</string>
+	<string>shadowRadius</string>
+	<string>shadowOpacity</string>
+	<string>strokeEnd</string>
+</array>
+</plist>

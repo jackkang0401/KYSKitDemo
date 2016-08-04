@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>name</key>
+		<string>Basic</string>
+		<key>class</key>
+		<string>KYSSampleViewController</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Keyframe</string>
+		<key>class</key>
+		<string>KYSKeyframeSampleViewController</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Transition</string>
+		<key>class</key>
+		<string>KYSTransitionSampleViewController</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>SpringAnimation</string>
+		<key>class</key>
+		<string>KYSSpringAnimationSampleViewController</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>缓冲</string>
+		<key>class</key>
+		<string>BufferViewController</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Timer</string>
+		<key>class</key>
+		<string>TimerViewController</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Board</string>
+		<key>class</key>
+		<string>BoardDrawViewController</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Draw</string>
+		<key>class</key>
+		<string>DrawViewController</string>
+	</dict>
+</array>
+</plist>
