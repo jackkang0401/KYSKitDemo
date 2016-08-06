@@ -475,8 +475,6 @@
 		25FEF6A01C7AF668007BACFE /* UICategory */ = {
 			isa = PBXGroup;
 			children = (
-				F1028FB11D55F7AD00631A48 /* UIControl+KYSBTNClickOnce.h */,
-				F1028FB21D55F7AD00631A48 /* UIControl+KYSBTNClickOnce.m */,
 				252A1A941CEC5C6700B0FDF7 /* CLLocation+KYSLocationTransform.h */,
 				252A1A951CEC5C6700B0FDF7 /* CLLocation+KYSLocationTransform.m */,
 				254210771D532BEB00DA5E78 /* UIDevice+KYSDeviceInformation.h */,
@@ -495,6 +493,8 @@
 				251FD87A1C7C3A0A00AAC830 /* UIView+KYSAddition.m */,
 				2519725F1C7DB7B600CAC2DA /* UIImage+KYSAddition.h */,
 				251972601C7DB7B600CAC2DA /* UIImage+KYSAddition.m */,
+				F1028FB11D55F7AD00631A48 /* UIControl+KYSBTNClickOnce.h */,
+				F1028FB21D55F7AD00631A48 /* UIControl+KYSBTNClickOnce.m */,
 			);
 			path = UICategory;
 			sourceTree = "<group>";
