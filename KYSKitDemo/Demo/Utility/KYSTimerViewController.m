@@ -7,11 +7,11 @@
 //
 
 #import "KYSTimerViewController.h"
-#import "KYSTimer.h"
+#import "KYSGCDTimer.h"
 
 @interface KYSTimerViewController ()
 
-@property(nonatomic,strong)KYSTimer *kTimer;
+@property(nonatomic,strong)KYSGCDTimer *kTimer;
 @property(nonatomic,assign)unsigned long count;
 
 @end
@@ -48,7 +48,9 @@
     if (_kTimer) {
         [_kTimer invalidate];
     }
-    _kTimer=[KYSTimer timerWithTimeInterval:1 target:self selector:@selector(testTimer) repeats:YES];
+    _kTimer=[KYSGCDTimer scheduledTmerWithTimeInterval:1.0 queue:nil block:^{
+        NSLog(@"KYSGCDTimer：1");
+    } repeats:YES];
 }
 
 - (void)stopAction{
