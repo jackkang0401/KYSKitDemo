@@ -30,7 +30,7 @@
     if (self.kys_ignoreEventFlag) {
         return;
     }
-    if (self.kys_accentEventTimeInterval) {
+    if (self.kys_accentEventTimeInterval > 0) {
         self.kys_ignoreEventFlag=YES;
         [self performSelector:@selector(setKys_ignoreEventFlag:) withObject:@(NO) afterDelay:self.kys_accentEventTimeInterval];
     }
