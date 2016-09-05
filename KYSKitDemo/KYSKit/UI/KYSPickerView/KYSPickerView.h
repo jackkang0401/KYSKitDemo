@@ -23,6 +23,8 @@ typedef NS_ENUM(NSInteger,KYSPickerViewType){
 @property(nonatomic,weak)id<KYSPickerViewDateDataSource> dateDataSource;
 @property(nonatomic,weak)id<KYSPickerViewNormalDataSource> normalDataSource;
 
+
+//frame 为父视图的frame
 - (instancetype)initWithFrame:(CGRect)frame type:(KYSPickerViewType)type;
 
 - (void)KYSShow;
@@ -58,9 +60,10 @@ typedef NS_ENUM(NSInteger,KYSPickerViewType){
 
 @optional
 - (NSDate *)currentDateKYSPickerView:(KYSPickerView *)pickerView;
+- (NSDate *)minDateKYSPickerView:(KYSPickerView *)pickerView;
+- (NSDate *)maxDateKYSPickerView:(KYSPickerView *)pickerView;
 
 @end
-
 
 
 

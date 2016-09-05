@@ -60,6 +60,8 @@
 		2542107E1D532D1E00DA5E78 /* UIDevice+KYSCPU.m in Sources */ = {isa = PBXBuildFile; fileRef = 2542107D1D532D1E00DA5E78 /* UIDevice+KYSCPU.m */; };
 		254210811D532FFB00DA5E78 /* UIDevice+KYSDisk_Memory.m in Sources */ = {isa = PBXBuildFile; fileRef = 254210801D532FFB00DA5E78 /* UIDevice+KYSDisk_Memory.m */; };
 		254210841D5336EF00DA5E78 /* UIDevice+KYSPrivateAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 254210831D5336EF00DA5E78 /* UIDevice+KYSPrivateAPI.m */; };
+		257BF4631D7D71FA0054CC72 /* NSString+KYSEncodeAndDecode.m in Sources */ = {isa = PBXBuildFile; fileRef = 257BF4621D7D71FA0054CC72 /* NSString+KYSEncodeAndDecode.m */; };
+		257BF4681D7D78A30054CC72 /* NSString+KYSCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 257BF4671D7D78A30054CC72 /* NSString+KYSCheck.m */; };
 		257EA2CD1CF322B300CE5A5A /* KYSPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 257EA2CC1CF322B300CE5A5A /* KYSPickerView.m */; };
 		257F38CD1CF424BD0050D382 /* libKYSAlertView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 257F38CB1CF423380050D382 /* libKYSAlertView.a */; };
 		25FEF67B1C7AB6E7007BACFE /* KYSTimerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FEF67A1C7AB6E7007BACFE /* KYSTimerViewController.m */; };
@@ -183,6 +185,10 @@
 		254210801D532FFB00DA5E78 /* UIDevice+KYSDisk_Memory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+KYSDisk_Memory.m"; sourceTree = "<group>"; };
 		254210821D5336EF00DA5E78 /* UIDevice+KYSPrivateAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+KYSPrivateAPI.h"; sourceTree = "<group>"; };
 		254210831D5336EF00DA5E78 /* UIDevice+KYSPrivateAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+KYSPrivateAPI.m"; sourceTree = "<group>"; };
+		257BF4611D7D71FA0054CC72 /* NSString+KYSEncodeAndDecode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+KYSEncodeAndDecode.h"; sourceTree = "<group>"; };
+		257BF4621D7D71FA0054CC72 /* NSString+KYSEncodeAndDecode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+KYSEncodeAndDecode.m"; sourceTree = "<group>"; };
+		257BF4661D7D78A30054CC72 /* NSString+KYSCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+KYSCheck.h"; sourceTree = "<group>"; };
+		257BF4671D7D78A30054CC72 /* NSString+KYSCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+KYSCheck.m"; sourceTree = "<group>"; };
 		257EA2CB1CF322B300CE5A5A /* KYSPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KYSPickerView.h; sourceTree = "<group>"; };
 		257EA2CC1CF322B300CE5A5A /* KYSPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KYSPickerView.m; sourceTree = "<group>"; };
 		257F38C61CF423380050D382 /* KYSAlertView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KYSAlertView.xcodeproj; path = KYSAlertView/KYSAlertView.xcodeproj; sourceTree = "<group>"; };
@@ -456,6 +462,10 @@
 				251FD8771C7C37B600AAC830 /* NSArray+KYSAddition.m */,
 				25FEF69A1C7AF58B007BACFE /* NSString+KYSAddition.h */,
 				25FEF69B1C7AF58B007BACFE /* NSString+KYSAddition.m */,
+				257BF4611D7D71FA0054CC72 /* NSString+KYSEncodeAndDecode.h */,
+				257BF4621D7D71FA0054CC72 /* NSString+KYSEncodeAndDecode.m */,
+				257BF4661D7D78A30054CC72 /* NSString+KYSCheck.h */,
+				257BF4671D7D78A30054CC72 /* NSString+KYSCheck.m */,
 				25FEF6941C7AF110007BACFE /* NSData+KYSAddition.h */,
 				25FEF6951C7AF110007BACFE /* NSData+KYSAddition.m */,
 				251FD8731C7C303700AAC830 /* NSDictionary+KYSAddition.h */,
@@ -629,6 +639,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				25FEF67B1C7AB6E7007BACFE /* KYSTimerViewController.m in Sources */,
+				257BF4631D7D71FA0054CC72 /* NSString+KYSEncodeAndDecode.m in Sources */,
 				253E601C1C6048C600B51356 /* AppDelegate.m in Sources */,
 				25FEF6961C7AF110007BACFE /* NSData+KYSAddition.m in Sources */,
 				253E60321C6049F200B51356 /* KYSNetReachability.m in Sources */,
@@ -664,6 +675,7 @@
 				252E718E1C882E770026AFD8 /* KYSSpringAnimationSampleViewController.m in Sources */,
 				251FD8881C7C61D200AAC830 /* KYSNetworkURLConnection.m in Sources */,
 				252E718B1C882E770026AFD8 /* KYSKeyframeSampleViewController.m in Sources */,
+				257BF4681D7D78A30054CC72 /* NSString+KYSCheck.m in Sources */,
 				251FD8781C7C37B600AAC830 /* NSArray+KYSAddition.m in Sources */,
 				252E71801C882E770026AFD8 /* DrawView.m in Sources */,
 				252A1A8F1CEC16C900B0FDF7 /* UITextField+KYSDeleteBackwardNotification.m in Sources */,
