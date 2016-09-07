@@ -107,7 +107,7 @@
         // 最小时间
         _datePicker.minimumDate=[self p_getMinDate];
         // 最大时间
-        _datePicker.minimumDate=[self p_getMinDate];
+        _datePicker.minimumDate=[self p_getMaxDate];
     }
 }
 
