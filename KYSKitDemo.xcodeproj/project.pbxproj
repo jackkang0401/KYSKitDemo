@@ -23,7 +23,6 @@
 		251FD8851C7C60FF00AAC830 /* KYSKeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 251FD8841C7C60FF00AAC830 /* KYSKeyChain.m */; };
 		251FD8881C7C61D200AAC830 /* KYSNetworkURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 251FD8871C7C61D200AAC830 /* KYSNetworkURLConnection.m */; };
 		251FD88C1C7C62BD00AAC830 /* KYSPathHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 251FD88B1C7C62BD00AAC830 /* KYSPathHelper.m */; };
-		252A1A8F1CEC16C900B0FDF7 /* UITextField+KYSDeleteBackwardNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 252A1A8E1CEC16C900B0FDF7 /* UITextField+KYSDeleteBackwardNotification.m */; };
 		252A1A931CEC190E00B0FDF7 /* KYSMYUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 252A1A921CEC190E00B0FDF7 /* KYSMYUIViewController.m */; };
 		252A1A961CEC5C6700B0FDF7 /* CLLocation+KYSLocationTransform.m in Sources */ = {isa = PBXBuildFile; fileRef = 252A1A951CEC5C6700B0FDF7 /* CLLocation+KYSLocationTransform.m */; };
 		252E71571C882E5D0026AFD8 /* KYSLayerAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 252E71541C882E5D0026AFD8 /* KYSLayerAnimation.m */; };
@@ -62,8 +61,10 @@
 		254210841D5336EF00DA5E78 /* UIDevice+KYSPrivateAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 254210831D5336EF00DA5E78 /* UIDevice+KYSPrivateAPI.m */; };
 		257BF4631D7D71FA0054CC72 /* NSString+KYSEncodeAndDecode.m in Sources */ = {isa = PBXBuildFile; fileRef = 257BF4621D7D71FA0054CC72 /* NSString+KYSEncodeAndDecode.m */; };
 		257BF4681D7D78A30054CC72 /* NSString+KYSCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 257BF4671D7D78A30054CC72 /* NSString+KYSCheck.m */; };
-		257EA2CD1CF322B300CE5A5A /* KYSPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 257EA2CC1CF322B300CE5A5A /* KYSPickerView.m */; };
-		257F38CD1CF424BD0050D382 /* libKYSAlertView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 257F38CB1CF423380050D382 /* libKYSAlertView.a */; };
+		25DDDB0E1DBDBA88003BE419 /* KYSPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25DDDB021DBDBA88003BE419 /* KYSPickerView.m */; };
+		25DDDB0F1DBDBA88003BE419 /* UITextField+KYSDeleteBackwardNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 25DDDB051DBDBA88003BE419 /* UITextField+KYSDeleteBackwardNotification.m */; };
+		25DDDB231DBDBB4B003BE419 /* libKYSAlertView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 25DDDB221DBDBAE3003BE419 /* libKYSAlertView.a */; };
+		25DDDB241DBDBB4B003BE419 /* libKYSTextView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 25DDDB1C1DBDBADB003BE419 /* libKYSTextView.a */; };
 		25FEF67B1C7AB6E7007BACFE /* KYSTimerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FEF67A1C7AB6E7007BACFE /* KYSTimerViewController.m */; };
 		25FEF67F1C7ABCD5007BACFE /* Demo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25FEF67E1C7ABCD5007BACFE /* Demo.plist */; };
 		25FEF6831C7AE1ED007BACFE /* NSTimer+KYSBlocksSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FEF6821C7AE1ED007BACFE /* NSTimer+KYSBlocksSupport.m */; };
@@ -74,23 +75,22 @@
 		25FEF6A61C7AF9B8007BACFE /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 25FEF6A51C7AF9B8007BACFE /* libz.tbd */; };
 		F1028FB31D55F7AD00631A48 /* UIControl+KYSBTNClickOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = F1028FB21D55F7AD00631A48 /* UIControl+KYSBTNClickOnce.m */; };
 		F1028FB81D563E9500631A48 /* KYSGCDTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = F1028FB71D563E9500631A48 /* KYSGCDTimer.m */; };
-		F1CB5F391D007551001FF3CA /* libKYSTextView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F1CB5F381D007531001FF3CA /* libKYSTextView.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		257F38CA1CF423380050D382 /* PBXContainerItemProxy */ = {
+		25DDDB1B1DBDBADB003BE419 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 257F38C61CF423380050D382 /* KYSAlertView.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 257F38AF1CF406D50050D382;
-			remoteInfo = KYSAlertView;
-		};
-		F1CB5F371D007531001FF3CA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F1CB5F321D007531001FF3CA /* KYSTextView.xcodeproj */;
+			containerPortal = 25DDDB171DBDBADB003BE419 /* KYSTextView.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = F1CB5F261D0074E1001FF3CA;
 			remoteInfo = KYSTextView;
+		};
+		25DDDB211DBDBAE3003BE419 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 25DDDB1D1DBDBAE2003BE419 /* KYSAlertView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 257F38AF1CF406D50050D382;
+			remoteInfo = KYSAlertView;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -124,8 +124,6 @@
 		251FD8871C7C61D200AAC830 /* KYSNetworkURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KYSNetworkURLConnection.m; sourceTree = "<group>"; };
 		251FD88A1C7C62BD00AAC830 /* KYSPathHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KYSPathHelper.h; sourceTree = "<group>"; };
 		251FD88B1C7C62BD00AAC830 /* KYSPathHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KYSPathHelper.m; sourceTree = "<group>"; };
-		252A1A8D1CEC16C900B0FDF7 /* UITextField+KYSDeleteBackwardNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+KYSDeleteBackwardNotification.h"; sourceTree = "<group>"; };
-		252A1A8E1CEC16C900B0FDF7 /* UITextField+KYSDeleteBackwardNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+KYSDeleteBackwardNotification.m"; sourceTree = "<group>"; };
 		252A1A911CEC190E00B0FDF7 /* KYSMYUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KYSMYUIViewController.h; sourceTree = "<group>"; };
 		252A1A921CEC190E00B0FDF7 /* KYSMYUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KYSMYUIViewController.m; sourceTree = "<group>"; };
 		252A1A941CEC5C6700B0FDF7 /* CLLocation+KYSLocationTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLLocation+KYSLocationTransform.h"; sourceTree = "<group>"; };
@@ -189,9 +187,12 @@
 		257BF4621D7D71FA0054CC72 /* NSString+KYSEncodeAndDecode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+KYSEncodeAndDecode.m"; sourceTree = "<group>"; };
 		257BF4661D7D78A30054CC72 /* NSString+KYSCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+KYSCheck.h"; sourceTree = "<group>"; };
 		257BF4671D7D78A30054CC72 /* NSString+KYSCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+KYSCheck.m"; sourceTree = "<group>"; };
-		257EA2CB1CF322B300CE5A5A /* KYSPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KYSPickerView.h; sourceTree = "<group>"; };
-		257EA2CC1CF322B300CE5A5A /* KYSPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KYSPickerView.m; sourceTree = "<group>"; };
-		257F38C61CF423380050D382 /* KYSAlertView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KYSAlertView.xcodeproj; path = KYSAlertView/KYSAlertView.xcodeproj; sourceTree = "<group>"; };
+		25DDDB011DBDBA88003BE419 /* KYSPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KYSPickerView.h; sourceTree = "<group>"; };
+		25DDDB021DBDBA88003BE419 /* KYSPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KYSPickerView.m; sourceTree = "<group>"; };
+		25DDDB041DBDBA88003BE419 /* UITextField+KYSDeleteBackwardNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+KYSDeleteBackwardNotification.h"; sourceTree = "<group>"; };
+		25DDDB051DBDBA88003BE419 /* UITextField+KYSDeleteBackwardNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+KYSDeleteBackwardNotification.m"; sourceTree = "<group>"; };
+		25DDDB171DBDBADB003BE419 /* KYSTextView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = KYSTextView.xcodeproj; sourceTree = "<group>"; };
+		25DDDB1D1DBDBAE2003BE419 /* KYSAlertView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = KYSAlertView.xcodeproj; sourceTree = "<group>"; };
 		25FEF6791C7AB6E7007BACFE /* KYSTimerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KYSTimerViewController.h; sourceTree = "<group>"; };
 		25FEF67A1C7AB6E7007BACFE /* KYSTimerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KYSTimerViewController.m; sourceTree = "<group>"; };
 		25FEF67E1C7ABCD5007BACFE /* Demo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Demo.plist; sourceTree = "<group>"; };
@@ -210,7 +211,6 @@
 		F1028FB21D55F7AD00631A48 /* UIControl+KYSBTNClickOnce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIControl+KYSBTNClickOnce.m"; sourceTree = "<group>"; };
 		F1028FB61D563E9500631A48 /* KYSGCDTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KYSGCDTimer.h; sourceTree = "<group>"; };
 		F1028FB71D563E9500631A48 /* KYSGCDTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KYSGCDTimer.m; sourceTree = "<group>"; };
-		F1CB5F321D007531001FF3CA /* KYSTextView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KYSTextView.xcodeproj; path = KYSTextView/KYSTextView.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,8 +218,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F1CB5F391D007551001FF3CA /* libKYSTextView.a in Frameworks */,
-				257F38CD1CF424BD0050D382 /* libKYSAlertView.a in Frameworks */,
+				25DDDB231DBDBB4B003BE419 /* libKYSAlertView.a in Frameworks */,
+				25DDDB241DBDBB4B003BE419 /* libKYSTextView.a in Frameworks */,
 				25FEF6A61C7AF9B8007BACFE /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -276,26 +276,6 @@
 				252E719B1C882F360026AFD8 /* sina_on@2x.png */,
 			);
 			path = images;
-			sourceTree = "<group>";
-		};
-		252A1A8B1CEC162B00B0FDF7 /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				F1CB5F321D007531001FF3CA /* KYSTextView.xcodeproj */,
-				257F38C61CF423380050D382 /* KYSAlertView.xcodeproj */,
-				257EA2CA1CF322B300CE5A5A /* KYSPickerView */,
-				252A1A8C1CEC162B00B0FDF7 /* KYSTextField */,
-			);
-			path = UI;
-			sourceTree = "<group>";
-		};
-		252A1A8C1CEC162B00B0FDF7 /* KYSTextField */ = {
-			isa = PBXGroup;
-			children = (
-				252A1A8D1CEC16C900B0FDF7 /* UITextField+KYSDeleteBackwardNotification.h */,
-				252A1A8E1CEC16C900B0FDF7 /* UITextField+KYSDeleteBackwardNotification.m */,
-			);
-			path = KYSTextField;
 			sourceTree = "<group>";
 		};
 		252A1A901CEC171E00B0FDF7 /* UI */ = {
@@ -386,6 +366,7 @@
 		253E60161C6048C600B51356 /* KYSKitDemo */ = {
 			isa = PBXGroup;
 			children = (
+				25DDDAF81DBDBA88003BE419 /* KYSUIKit */,
 				253E602E1C60495D00B51356 /* KYSKit */,
 				250454791C75A58E00952C05 /* Demo */,
 				253E601A1C6048C600B51356 /* AppDelegate.h */,
@@ -416,7 +397,6 @@
 				25FEF6801C7AE15D007BACFE /* Category */,
 				253E602F1C60495D00B51356 /* Utility */,
 				252E71521C882E5D0026AFD8 /* LayerAnimation */,
-				252A1A8B1CEC162B00B0FDF7 /* UI */,
 			);
 			path = KYSKit;
 			sourceTree = "<group>";
@@ -438,19 +418,63 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
-		257EA2CA1CF322B300CE5A5A /* KYSPickerView */ = {
+		25DDDAF81DBDBA88003BE419 /* KYSUIKit */ = {
 			isa = PBXGroup;
 			children = (
-				257EA2CB1CF322B300CE5A5A /* KYSPickerView.h */,
-				257EA2CC1CF322B300CE5A5A /* KYSPickerView.m */,
+				25DDDB061DBDBA88003BE419 /* KYSTextView */,
+				25DDDAF91DBDBA88003BE419 /* KYSAlertView */,
+				25DDDB001DBDBA88003BE419 /* KYSPickerView */,
+				25DDDB031DBDBA88003BE419 /* KYSTextField */,
+			);
+			path = KYSUIKit;
+			sourceTree = "<group>";
+		};
+		25DDDAF91DBDBA88003BE419 /* KYSAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				25DDDB1D1DBDBAE2003BE419 /* KYSAlertView.xcodeproj */,
+			);
+			path = KYSAlertView;
+			sourceTree = "<group>";
+		};
+		25DDDB001DBDBA88003BE419 /* KYSPickerView */ = {
+			isa = PBXGroup;
+			children = (
+				25DDDB011DBDBA88003BE419 /* KYSPickerView.h */,
+				25DDDB021DBDBA88003BE419 /* KYSPickerView.m */,
 			);
 			path = KYSPickerView;
 			sourceTree = "<group>";
 		};
-		257F38C71CF423380050D382 /* Products */ = {
+		25DDDB031DBDBA88003BE419 /* KYSTextField */ = {
 			isa = PBXGroup;
 			children = (
-				257F38CB1CF423380050D382 /* libKYSAlertView.a */,
+				25DDDB041DBDBA88003BE419 /* UITextField+KYSDeleteBackwardNotification.h */,
+				25DDDB051DBDBA88003BE419 /* UITextField+KYSDeleteBackwardNotification.m */,
+			);
+			path = KYSTextField;
+			sourceTree = "<group>";
+		};
+		25DDDB061DBDBA88003BE419 /* KYSTextView */ = {
+			isa = PBXGroup;
+			children = (
+				25DDDB171DBDBADB003BE419 /* KYSTextView.xcodeproj */,
+			);
+			path = KYSTextView;
+			sourceTree = "<group>";
+		};
+		25DDDB181DBDBADB003BE419 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				25DDDB1C1DBDBADB003BE419 /* libKYSTextView.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		25DDDB1E1DBDBAE2003BE419 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				25DDDB221DBDBAE3003BE419 /* libKYSAlertView.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -517,14 +541,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		F1CB5F331D007531001FF3CA /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				F1CB5F381D007531001FF3CA /* libKYSTextView.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -573,12 +589,12 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 257F38C71CF423380050D382 /* Products */;
-					ProjectRef = 257F38C61CF423380050D382 /* KYSAlertView.xcodeproj */;
+					ProductGroup = 25DDDB1E1DBDBAE2003BE419 /* Products */;
+					ProjectRef = 25DDDB1D1DBDBAE2003BE419 /* KYSAlertView.xcodeproj */;
 				},
 				{
-					ProductGroup = F1CB5F331D007531001FF3CA /* Products */;
-					ProjectRef = F1CB5F321D007531001FF3CA /* KYSTextView.xcodeproj */;
+					ProductGroup = 25DDDB181DBDBADB003BE419 /* Products */;
+					ProjectRef = 25DDDB171DBDBADB003BE419 /* KYSTextView.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -589,18 +605,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		257F38CB1CF423380050D382 /* libKYSAlertView.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libKYSAlertView.a;
-			remoteRef = 257F38CA1CF423380050D382 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F1CB5F381D007531001FF3CA /* libKYSTextView.a */ = {
+		25DDDB1C1DBDBADB003BE419 /* libKYSTextView.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libKYSTextView.a;
-			remoteRef = F1CB5F371D007531001FF3CA /* PBXContainerItemProxy */;
+			remoteRef = 25DDDB1B1DBDBADB003BE419 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		25DDDB221DBDBAE3003BE419 /* libKYSAlertView.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libKYSAlertView.a;
+			remoteRef = 25DDDB211DBDBAE3003BE419 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -662,6 +678,7 @@
 				252E718F1C882E770026AFD8 /* KYSTransitionSampleViewController.m in Sources */,
 				251FD8851C7C60FF00AAC830 /* KYSKeyChain.m in Sources */,
 				253E60191C6048C600B51356 /* main.m in Sources */,
+				25DDDB0F1DBDBA88003BE419 /* UITextField+KYSDeleteBackwardNotification.m in Sources */,
 				25FEF6991C7AF4FA007BACFE /* NSNumber+KYSAddition.m in Sources */,
 				252A1A961CEC5C6700B0FDF7 /* CLLocation+KYSLocationTransform.m in Sources */,
 				251972571C7D469000CAC2DA /* KYSImageBlurMaskViewController.m in Sources */,
@@ -669,7 +686,6 @@
 				F1028FB31D55F7AD00631A48 /* UIControl+KYSBTNClickOnce.m in Sources */,
 				252E718D1C882E770026AFD8 /* KYSSampleViewController.m in Sources */,
 				252E71571C882E5D0026AFD8 /* KYSLayerAnimation.m in Sources */,
-				257EA2CD1CF322B300CE5A5A /* KYSPickerView.m in Sources */,
 				252E717D1C882E770026AFD8 /* BoardDrawViewController.m in Sources */,
 				254210791D532BEB00DA5E78 /* UIDevice+KYSDeviceInformation.m in Sources */,
 				252E718E1C882E770026AFD8 /* KYSSpringAnimationSampleViewController.m in Sources */,
@@ -678,7 +694,7 @@
 				257BF4681D7D78A30054CC72 /* NSString+KYSCheck.m in Sources */,
 				251FD8781C7C37B600AAC830 /* NSArray+KYSAddition.m in Sources */,
 				252E71801C882E770026AFD8 /* DrawView.m in Sources */,
-				252A1A8F1CEC16C900B0FDF7 /* UITextField+KYSDeleteBackwardNotification.m in Sources */,
+				25DDDB0E1DBDBA88003BE419 /* KYSPickerView.m in Sources */,
 				251FD87B1C7C3A0A00AAC830 /* UIView+KYSAddition.m in Sources */,
 				252E71581C882E5D0026AFD8 /* KYSMediaTiming.m in Sources */,
 				252E718A1C882E770026AFD8 /* KYSBasicSampleViewController.m in Sources */,

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-//hnxyzhw
+//按钮可以在限定时间内响应一次
 @interface UIControl (KYSBTNClickOnce)
 
 @property(nonatomic,assign)NSTimeInterval kys_accentEventTimeInterval;
