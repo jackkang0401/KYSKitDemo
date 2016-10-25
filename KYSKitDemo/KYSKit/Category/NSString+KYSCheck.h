@@ -17,4 +17,13 @@
 //电话号码合法性
 - (BOOL)isMobileNumber;
 
+//英文
+- (BOOL)isEnglish;
+
+//中文
+- (BOOL)isChinese;
+
+//中文和英文
+- (BOOL)isChineseAndEnglish;
+
 @end

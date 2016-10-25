@@ -49,7 +49,7 @@ NSString *const KYS_CHECK_CHINESE_ENGLISH = @"^[A-Za-z\u4E00-\u9FA5]+$";
 }
 
 //中文和英文
-- (BOOL)isEnglishAndChinese{
+- (BOOL)isChineseAndEnglish{
     return [self p_checkWithString:KYS_CHECK_CHINESE_ENGLISH];
 }
 
