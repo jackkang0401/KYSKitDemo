@@ -71,6 +71,7 @@
 		25FEF6A61C7AF9B8007BACFE /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 25FEF6A51C7AF9B8007BACFE /* libz.tbd */; };
 		F1028FB31D55F7AD00631A48 /* UIControl+KYSBTNClickOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = F1028FB21D55F7AD00631A48 /* UIControl+KYSBTNClickOnce.m */; };
 		F1028FB81D563E9500631A48 /* KYSGCDTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = F1028FB71D563E9500631A48 /* KYSGCDTimer.m */; };
+		F11C603D1DC6295900E585BF /* KYSAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = F11C603C1DC6295900E585BF /* KYSAlertController.m */; };
 		F1410CF71DC5FD41006F8892 /* KYSAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1410CEA1DC5FD41006F8892 /* KYSAlertView.m */; };
 		F1410CF81DC5FD41006F8892 /* KYSChoicePhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = F1410CED1DC5FD41006F8892 /* KYSChoicePhoto.m */; };
 		F1410CF91DC5FD41006F8892 /* KYSPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1410CF01DC5FD41006F8892 /* KYSPickerView.m */; };
@@ -189,6 +190,8 @@
 		F1028FB21D55F7AD00631A48 /* UIControl+KYSBTNClickOnce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIControl+KYSBTNClickOnce.m"; sourceTree = "<group>"; };
 		F1028FB61D563E9500631A48 /* KYSGCDTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KYSGCDTimer.h; sourceTree = "<group>"; };
 		F1028FB71D563E9500631A48 /* KYSGCDTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KYSGCDTimer.m; sourceTree = "<group>"; };
+		F11C603B1DC6295900E585BF /* KYSAlertController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KYSAlertController.h; sourceTree = "<group>"; };
+		F11C603C1DC6295900E585BF /* KYSAlertController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KYSAlertController.m; sourceTree = "<group>"; };
 		F1410CE91DC5FD41006F8892 /* KYSAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KYSAlertView.h; sourceTree = "<group>"; };
 		F1410CEA1DC5FD41006F8892 /* KYSAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KYSAlertView.m; sourceTree = "<group>"; };
 		F1410CEC1DC5FD41006F8892 /* KYSChoicePhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KYSChoicePhoto.h; sourceTree = "<group>"; };
@@ -466,9 +469,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		F11C603A1DC6295900E585BF /* KYSAlertController */ = {
+			isa = PBXGroup;
+			children = (
+				F11C603B1DC6295900E585BF /* KYSAlertController.h */,
+				F11C603C1DC6295900E585BF /* KYSAlertController.m */,
+			);
+			path = KYSAlertController;
+			sourceTree = "<group>";
+		};
 		F1410CE71DC5FD41006F8892 /* KYSUIKit */ = {
 			isa = PBXGroup;
 			children = (
+				F11C603A1DC6295900E585BF /* KYSAlertController */,
 				F1410CE81DC5FD41006F8892 /* KYSAlertView */,
 				F1410CEB1DC5FD41006F8892 /* KYSChoicePhoto */,
 				F1410CEE1DC5FD41006F8892 /* KYSPickerView */,
@@ -549,7 +562,7 @@
 		253E600C1C6048C600B51356 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Kang YongShuai";
 				TargetAttributes = {
 					253E60131C6048C600B51356 = {
@@ -648,6 +661,7 @@
 				252E718E1C882E770026AFD8 /* KYSSpringAnimationSampleViewController.m in Sources */,
 				251FD8881C7C61D200AAC830 /* KYSNetworkURLConnection.m in Sources */,
 				252E718B1C882E770026AFD8 /* KYSKeyframeSampleViewController.m in Sources */,
+				F11C603D1DC6295900E585BF /* KYSAlertController.m in Sources */,
 				257BF4681D7D78A30054CC72 /* NSString+KYSCheck.m in Sources */,
 				251FD8781C7C37B600AAC830 /* NSArray+KYSAddition.m in Sources */,
 				252E71801C882E770026AFD8 /* DrawView.m in Sources */,
@@ -697,8 +711,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -741,8 +757,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
