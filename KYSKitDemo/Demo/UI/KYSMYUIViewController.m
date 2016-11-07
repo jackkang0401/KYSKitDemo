@@ -9,8 +9,8 @@
 #import "KYSMYUIViewController.h"
 #import "UITextField+KYSDeleteBackwardNotification.h"
 #import "KYSPickerView.h"
-#import <KYSAlertView/KYSAlertView.h>
-#import <KYSTextView/KYSTextView.h>
+#import "KYSAlertView.h"
+#import "KYSTextView.h"
 
 @interface KYSMYUIViewController()<KYSPickerViewDelegate,KYSPickerViewNormalDataSource,KYSPickerViewDateDataSource,KYSTextFieldDelegate,KYSTextViewDelegate>
 
@@ -126,22 +126,25 @@
 //}
 
 #pragma mark - KYSPickerViewNormalDataSource
-- (NSArray *)dataSourceKYSPickerView:(KYSPickerView *)pickerView{
-    NSArray *array=self.pickerDataDic[@(_selectedIndex)];
-    return array;
+- (NSInteger)numberOfComponentsInPickerView:(KYSPickerView *)pickerView{
+    return self.pickerDataDic.allKeys.count+1;
 }
 
-- (NSInteger)selectedIndexKYSPickerView:(KYSPickerView *)pickerView{
-    NSString *str=1==_selectedIndex?@"硕士":@"1-3年";
-    NSArray *array=self.pickerDataDic[@(_selectedIndex)];
+- (NSArray *)dataSourceKYSPickerView:(KYSPickerView *)pickerView componentIndex:(NSInteger)index{
+    return self.pickerDataDic[@(index)];
+}
+
+- (NSInteger)selectedIndexKYSPickerView:(KYSPickerView *)pickerView componentIndex:(NSInteger)index{
+    NSString *str = 0==index?@"硕士":@"1-3年";
+    NSArray *array=self.pickerDataDic[@(index)];
     return [array indexOfObject:str];
 }
 
 
 - (NSDictionary *)pickerDataDic{
     if (!_pickerDataDic) {
-        _pickerDataDic=@{@(1):@[@"大专以下",@"大专",@"本科",@"硕士",@"硕士以上"],
-                         @(2):@[@"1年以下",@"1-3年",@"3-5年",@"5-10年",@"10年以上"]};
+        _pickerDataDic=@{@(0):@[@"大专以下",@"大专",@"本科",@"硕士",@"硕士以上"],
+                         @(1):@[@"1年以下",@"1-3年",@"3-5年",@"5-10年",@"10年以上"]};
     }
     return _pickerDataDic;
 }

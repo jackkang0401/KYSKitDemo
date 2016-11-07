@@ -39,6 +39,10 @@ typedef NS_ENUM(NSInteger,KYSPickerViewType){
 @protocol KYSPickerViewDelegate <NSObject>
 
 @optional
+/*
+ 普通类型：返回对应component的数组
+ 时间类型：返回NSdate对象
+ */
 - (void)KYSPickerView:(KYSPickerView *)pickerView selectedObject:(id)object;
 
 @end
@@ -47,10 +51,14 @@ typedef NS_ENUM(NSInteger,KYSPickerViewType){
 @protocol KYSPickerViewNormalDataSource <NSObject>
 
 @required
-- (NSArray *)dataSourceKYSPickerView:(KYSPickerView *)pickerView;
+//默认 @[]
+- (NSArray *)dataSourceKYSPickerView:(KYSPickerView *)pickerView componentIndex:(NSInteger)index;
 
 @optional
-- (NSInteger)selectedIndexKYSPickerView:(KYSPickerView *)pickerView;
+//时间pickerView无效，默认是1，可不设置
+- (NSInteger)numberOfComponentsInPickerView:(KYSPickerView *)pickerView;
+
+- (NSInteger)selectedIndexKYSPickerView:(KYSPickerView *)pickerView componentIndex:(NSInteger)index;
 
 @end
 

@@ -11,13 +11,14 @@
 
 @interface KYSPickerView()<UIPickerViewDelegate,UIPickerViewDataSource>
 
-@property(nonatomic,strong)NSArray *dataArray;
-@property(nonatomic,assign)NSInteger selectedIndex;
+@property(nonatomic,strong)NSMutableArray *dataArray;
+@property(nonatomic,assign)NSInteger numberOfComponents;//时间pickerView无效
 
 @property (nonatomic,assign) KYSPickerViewType type;
 @property (nonatomic,strong) UIView *selectView;
 @property (nonatomic,strong) UIDatePicker *datePicker;
 @property (nonatomic,strong) UIPickerView *pickView;
+
 
 @end
 
@@ -91,15 +92,28 @@
 
 - (void)KYSReloadData{
     if ( KYSPickerViewNormal==_type) {
+        //获取列数
+        self.numberOfComponents=[self p_getNumberOfComponents];
+        
         //获取数据列表
-        self.dataArray=[self p_getDataSource];
-        //获取选中项Index
-        self.selectedIndex=[self p_getSelectedIndex];
+        [self.dataArray removeAllObjects];
+        for (int i=0; i<self.numberOfComponents; i++) {
+            NSArray *array=[self p_getDataSourceWithComponentIndex:i];
+            if (!array) {
+                array=@[];
+            }
+            [self.dataArray addObject:array];
+        }
+        
         //刷新数据
         [_pickView reloadAllComponents];
-        //设置选中Index
-        if (self.dataArray.count&&(self.selectedIndex>=0&&self.selectedIndex<self.dataArray.count)) {
-            [_pickView selectRow:self.selectedIndex inComponent:0 animated:YES];
+        
+        //设置选中项Index
+        for (int i=0; i<self.dataArray.count; i++) {
+            NSInteger index=[self p_getSelectedIndexWithComponentIndex:i];
+            if (index>=0 && index<((NSArray *)self.dataArray[i]).count) {
+                [_pickView selectRow:index inComponent:i animated:YES];
+            }
         }
     }else if( KYSPickerViewDate==_type){
         // 默认日期
@@ -135,11 +149,11 @@
 
 #pragma mark - UIPickerViewDelegate,UIPickerViewDataSource
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
-    return 1;
+    return self.dataArray.count;
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
-    return self.dataArray?self.dataArray.count:0;
+    return ((NSArray *)self.dataArray[component]).count;
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component{
@@ -148,7 +162,7 @@
 
 - (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return self.dataArray?[self.dataArray objectAtIndex:row]:0;
+    return [self.dataArray[component] objectAtIndex:row];
 }
 
 
@@ -174,10 +188,20 @@
 - (void)p_selectedWithType:(KYSPickerViewType)type{
     if ( KYSPickerViewNormal==type) {
         NSLog(@"普通类型");
-        NSInteger row=[self.pickView selectedRowInComponent:0];
+        NSMutableArray *mArray=[[NSMutableArray alloc] init];
+        for (int i=0; i<self.dataArray.count; i++) {
+            NSInteger row=[self.pickView selectedRowInComponent:i];
+            //NSLog(@"%ld",(long)row);
+            if (((NSArray *)self.dataArray[i]).count<=0) {
+                [mArray addObject:@""];
+            }else{
+                NSObject *object=self.dataArray[i][row];
+                [mArray addObject:object];
+            }
+        }
         //返回选择结果
         if ([_delegate respondsToSelector:@selector(KYSPickerView:selectedObject:)]) {
-            [_delegate KYSPickerView:self selectedObject:self.dataArray[row]];
+            [_delegate KYSPickerView:self selectedObject:mArray];
         }
     }else if( KYSPickerViewDate==_type){
         NSLog(@"时间类型");
@@ -188,18 +212,25 @@
 }
 
 #pragma mark - KYSPickerViewNormalDataSource
-- (NSArray *)p_getDataSource{
-    if ([_normalDataSource respondsToSelector:@selector(dataSourceKYSPickerView:)]) {
-        return [_normalDataSource dataSourceKYSPickerView:self];
+- (NSArray *)p_getDataSourceWithComponentIndex:(NSInteger)index{
+    if ([_normalDataSource respondsToSelector:@selector(dataSourceKYSPickerView:componentIndex:)]) {
+        return [_normalDataSource dataSourceKYSPickerView:self componentIndex:index];
     }
-    return nil;
+    return @[];
 }
 
-- (NSInteger)p_getSelectedIndex{
-    if ([_normalDataSource respondsToSelector:@selector(selectedIndexKYSPickerView:)]) {
-        return [_normalDataSource selectedIndexKYSPickerView:self];
+- (NSInteger)p_getSelectedIndexWithComponentIndex:(NSInteger)index{
+    if ([_normalDataSource respondsToSelector:@selector(selectedIndexKYSPickerView:componentIndex:)]) {
+        return [_normalDataSource selectedIndexKYSPickerView:self componentIndex:index];
     }
     return 0;
+}
+
+- (NSInteger)p_getNumberOfComponents{
+    if ([_normalDataSource respondsToSelector:@selector(numberOfComponentsInPickerView:)]) {
+        return [_normalDataSource numberOfComponentsInPickerView:self];
+    }
+    return 1;
 }
 
 #pragma mark - KYSPickerViewDateDataSource
@@ -224,7 +255,13 @@
     return [NSDate date];
 }
 
-
+#pragma mark - lazy load
+- (NSMutableArray *)dataArray{
+    if (!_dataArray) {
+        _dataArray = [[NSMutableArray alloc] init];
+    }
+    return _dataArray;
+}
 
 
 @end
