@@ -79,7 +79,6 @@
 		F1410CFB1DC5FD41006F8892 /* KYSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1410CF61DC5FD41006F8892 /* KYSTextView.m */; };
 		F1F8BAED1DD21DA30024233E /* KYSDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1F8BAEC1DD21DA30024233E /* KYSDatePickerView.m */; };
 		F1F8BAF01DD228600024233E /* KYSLinkagePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1F8BAEF1DD228600024233E /* KYSLinkagePickerView.m */; };
-		F1F8BAF21DD228A50024233E /* KYSLinkage.plist in Resources */ = {isa = PBXBuildFile; fileRef = F1F8BAF11DD228A50024233E /* KYSLinkage.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -209,7 +208,6 @@
 		F1F8BAEC1DD21DA30024233E /* KYSDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KYSDatePickerView.m; sourceTree = "<group>"; };
 		F1F8BAEE1DD228600024233E /* KYSLinkagePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KYSLinkagePickerView.h; sourceTree = "<group>"; };
 		F1F8BAEF1DD228600024233E /* KYSLinkagePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KYSLinkagePickerView.m; sourceTree = "<group>"; };
-		F1F8BAF11DD228A50024233E /* KYSLinkage.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = KYSLinkage.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -526,7 +524,6 @@
 				F1F8BAEC1DD21DA30024233E /* KYSDatePickerView.m */,
 				F1F8BAEE1DD228600024233E /* KYSLinkagePickerView.h */,
 				F1F8BAEF1DD228600024233E /* KYSLinkagePickerView.m */,
-				F1F8BAF11DD228A50024233E /* KYSLinkage.plist */,
 			);
 			path = KYSPickerView;
 			sourceTree = "<group>";
@@ -609,7 +606,6 @@
 			files = (
 				252E71901C882E770026AFD8 /* Sample.plist in Resources */,
 				252E71A11C882F360026AFD8 /* sina_off@2x.png in Resources */,
-				F1F8BAF21DD228A50024233E /* KYSLinkage.plist in Resources */,
 				252E718C1C882E770026AFD8 /* KYSSample.storyboard in Resources */,
 				252E719D1C882F360026AFD8 /* qq_off@2x.png in Resources */,
 				2519725C1C7D82C600CAC2DA /* mask@2x.png in Resources */,
