@@ -9,12 +9,14 @@
 #import "KYSMYUIViewController.h"
 #import "UITextField+KYSDeleteBackwardNotification.h"
 #import "KYSPickerView.h"
+#import "KYSDatePickerView.h"
 #import "KYSAlertView.h"
 #import "KYSTextView.h"
 
-@interface KYSMYUIViewController()<KYSPickerViewDelegate,KYSPickerViewNormalDataSource,KYSPickerViewDateDataSource,KYSTextFieldDelegate,KYSTextViewDelegate>
+@interface KYSMYUIViewController()<KYSPickerViewDelegate,KYSPickerViewDataSource,KYSDatePickerViewDelegate,KYSDatePickerViewDataSource,KYSTextFieldDelegate,KYSTextViewDelegate>
 
 @property(nonatomic,strong)KYSPickerView *kPickerView;
+@property(nonatomic,strong)KYSDatePickerView *datePickerView;
 @property(nonatomic,strong)NSDictionary *pickerDataDic;
 @property(nonatomic,assign)NSInteger selectedIndex;
 
@@ -85,19 +87,19 @@
 - (void)btnAction:(UIButton *)btn{
     _selectedIndex=btn.tag;
     if(1==btn.tag){
-        _kPickerView = [[KYSPickerView alloc] initWithFrame:self.view.superview.bounds type:KYSPickerViewNormal];
+        _kPickerView = [[KYSPickerView alloc] initWithFrame:self.view.superview.bounds];
         _kPickerView.delegate=self;
         _kPickerView.normalDataSource=self;
         [self.view.superview addSubview:_kPickerView];
         [_kPickerView KYSShow];
         return;
     }else if(2==btn.tag){
-        _kPickerView = [[KYSPickerView alloc] initWithFrame:self.view.superview.bounds type:KYSPickerViewDate];
-        _kPickerView.delegate=self;
+        _datePickerView = [[KYSDatePickerView alloc] initWithFrame:self.view.superview.bounds];
+        _datePickerView.delegate=self;
         //_kPickerView.currentDate=;
-        _kPickerView.dateDataSource=self;
-        [self.view.superview addSubview:_kPickerView];
-        [_kPickerView KYSShow];
+        _datePickerView.dateDataSource=self;
+        [self.view.superview addSubview:_datePickerView];
+        [_datePickerView KYSShow];
     }else if(3==btn.tag){
         
         KYSAlertView *alertView=[[KYSAlertView alloc] initWithTitle:@"title"
@@ -120,12 +122,7 @@
     NSLog(@"%@",object);
 }
 
-#pragma mark - KYSPickerViewDateDataSource
-//- (NSDate *)currentDateKYSPickerView:(KYSPickerView *)pickerView{
-//    return _selectedAgeDate;
-//}
-
-#pragma mark - KYSPickerViewNormalDataSource
+#pragma mark - KYSPickerViewDataSource
 - (NSInteger)numberOfComponentsInPickerView:(KYSPickerView *)pickerView{
     return self.pickerDataDic.allKeys.count+1;
 }
@@ -139,6 +136,20 @@
     NSArray *array=self.pickerDataDic[@(index)];
     return [array indexOfObject:str];
 }
+
+#pragma mark - KYSDatePickerViewDelegate
+- (void)KYSDatePickerView:(KYSDatePickerView *)pickerView selectedObject:(id)object{
+    NSLog(@"%@",object);
+}
+
+- (void)cancelWithDatePickerView:(KYSDatePickerView *)pickerView{
+    NSLog(@"cancelWithDatePickerView:");
+}
+
+
+#pragma mark - KYSDatePickerViewDataSource
+
+
 
 
 - (NSDictionary *)pickerDataDic{

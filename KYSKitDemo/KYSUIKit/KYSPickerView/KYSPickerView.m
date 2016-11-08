@@ -7,16 +7,13 @@
 //
 
 #import "KYSPickerView.h"
-#import "NSDate+KYSAddition.h"
 
 @interface KYSPickerView()<UIPickerViewDelegate,UIPickerViewDataSource>
 
 @property(nonatomic,strong)NSMutableArray *dataArray;
 @property(nonatomic,assign)NSInteger numberOfComponents;//时间pickerView无效
 
-@property (nonatomic,assign) KYSPickerViewType type;
 @property (nonatomic,strong) UIView *selectView;
-@property (nonatomic,strong) UIDatePicker *datePicker;
 @property (nonatomic,strong) UIPickerView *pickView;
 
 
@@ -25,7 +22,7 @@
 
 @implementation KYSPickerView
 
-- (instancetype)initWithFrame:(CGRect)frame type:(KYSPickerViewType)type{
+- (instancetype)initWithFrame:(CGRect)frame{
     self=[super initWithFrame:frame];
     if (self) {
         self.backgroundColor=[UIColor colorWithWhite:0 alpha:0.15];
@@ -60,7 +57,7 @@
         [btn2 addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
         [_selectView addSubview:btn2];
         
-        [self p_setPickerViewWithType:type];
+        [self p_setPickerView];
         
     }
     return self;
@@ -72,11 +69,7 @@
 //}
 
 - (void)KYSShow{
-    if ( KYSPickerViewNormal==self.type) {
-        [_pickView reloadAllComponents];
-    }else if( KYSPickerViewDate==self.type){
-        
-    }
+    [_pickView reloadAllComponents];
     self.selectView.frame=CGRectMake(0, CGRectGetHeight(self.frame), CGRectGetWidth(self.frame), 180);
     [UIView animateWithDuration:0.5 animations:^{
         self.selectView.frame=CGRectMake(0, CGRectGetHeight(self.frame)-180, CGRectGetWidth(self.frame), 180);
@@ -94,47 +87,33 @@
 }
 
 - (void)KYSReloadData{
-    if ( KYSPickerViewNormal==self.type) {
-        //获取列数
-        self.numberOfComponents=[self p_getNumberOfComponents];
+    //获取列数
+    self.numberOfComponents=[self p_getNumberOfComponents];
         
-        //获取数据列表
-        [self.dataArray removeAllObjects];
-        for (int i=0; i<self.numberOfComponents; i++) {
-            NSArray *array=[self p_getDataSourceWithComponentIndex:i];
-            if (!array) {
-                array=@[];
-            }
-            [self.dataArray addObject:array];
+    //获取数据列表
+    [self.dataArray removeAllObjects];
+    for (int i=0; i<self.numberOfComponents; i++) {
+        NSArray *array=[self p_getDataSourceWithComponentIndex:i];
+        if (!array) {
+            array=@[];
         }
+        [self.dataArray addObject:array];
+    }
         
-        //刷新数据
-        [_pickView reloadAllComponents];
+    //刷新数据
+    [_pickView reloadAllComponents];
         
-        //设置选中项Index
-        for (int i=0; i<self.dataArray.count; i++) {
-            NSInteger index=[self p_getSelectedIndexWithComponentIndex:i];
-            if (index>=0 && index<((NSArray *)self.dataArray[i]).count) {
-                [_pickView selectRow:index inComponent:i animated:YES];
-            }
+    //设置选中项Index
+    for (int i=0; i<self.dataArray.count; i++) {
+        NSInteger index=[self p_getSelectedIndexWithComponentIndex:i];
+        if (index>=0 && index<((NSArray *)self.dataArray[i]).count) {
+            [_pickView selectRow:index inComponent:i animated:YES];
         }
-    }else if( KYSPickerViewDate==self.type){
-        // 默认日期
-        _datePicker.date =[self p_getCurrentDate];
-        // 最小时间
-        _datePicker.minimumDate=[self p_getMinDate];
-        // 最大时间
-        _datePicker.maximumDate=[self p_getMaxDate];
     }
 }
 
-- (void)setNormalDataSource:(id<KYSPickerViewNormalDataSource>)normalDataSource{
+- (void)setNormalDataSource:(id<KYSPickerViewDataSource>)normalDataSource{
     _normalDataSource=normalDataSource;
-    [self KYSReloadData];
-}
-
-- (void)setDateDataSource:(id<KYSPickerViewDateDataSource>)dateDataSource{
-    _dateDataSource=dateDataSource;
     [self KYSReloadData];
 }
 
@@ -148,7 +127,7 @@
 
 - (void)btnAction:(UIButton *)btn{
     if(2==btn.tag){
-        [self p_getSelected];
+        [self p_getSelectedValue];
     }else if(1==btn.tag){
         if ([_delegate respondsToSelector:@selector(cancelWithPickerView:)]) {
             [_delegate cancelWithPickerView:self];
@@ -182,48 +161,31 @@
 }
 
 #pragma mark - private
-- (void)p_setPickerViewWithType:(KYSPickerViewType)type{
-    self.type=type;
-    if ( KYSPickerViewNormal==self.type) {
-        _pickView=[[UIPickerView alloc] init];
-        _pickView.frame=CGRectMake(0, 30, _selectView.frame.size.width, _selectView.frame.size.height-30);
-        _pickView.showsSelectionIndicator=YES;
-        _pickView.backgroundColor=[UIColor whiteColor];
-        _pickView.delegate=self;
-        _pickView.dataSource=self;
-        [_selectView addSubview:_pickView];
-    }else if( KYSPickerViewDate==self.type){
-        _datePicker = [[UIDatePicker alloc] init];
-        _datePicker.frame=CGRectMake(0, 30, _selectView.frame.size.width, _selectView.frame.size.height-30);
-        _datePicker.datePickerMode = UIDatePickerModeDate;
-        _datePicker.backgroundColor = [UIColor whiteColor];
-        [_selectView addSubview:self.datePicker];
-    }
+- (void)p_setPickerView{
+    _pickView=[[UIPickerView alloc] init];
+    _pickView.frame=CGRectMake(0, 30, _selectView.frame.size.width, _selectView.frame.size.height-30);
+    _pickView.showsSelectionIndicator=YES;
+    _pickView.backgroundColor=[UIColor whiteColor];
+    _pickView.delegate=self;
+    _pickView.dataSource=self;
+    [_selectView addSubview:_pickView];
 }
 
-- (void)p_getSelected{
-    if ( KYSPickerViewNormal==self.type) {
-        NSLog(@"普通类型");
-        NSMutableArray *mArray=[[NSMutableArray alloc] init];
-        for (int i=0; i<self.dataArray.count; i++) {
-            NSInteger row=[self.pickView selectedRowInComponent:i];
-            //NSLog(@"%ld",(long)row);
-            if (((NSArray *)self.dataArray[i]).count<=0) {
-                [mArray addObject:@""];
-            }else{
-                NSObject *object=self.dataArray[i][row];
-                [mArray addObject:object];
-            }
+- (void)p_getSelectedValue{
+    NSMutableArray *mArray=[[NSMutableArray alloc] init];
+    for (int i=0; i<self.dataArray.count; i++) {
+        NSInteger row=[self.pickView selectedRowInComponent:i];
+        //NSLog(@"%ld",(long)row);
+        if (((NSArray *)self.dataArray[i]).count<=0) {
+            [mArray addObject:@""];
+        }else{
+            NSObject *object=self.dataArray[i][row];
+            [mArray addObject:object];
         }
-        //返回选择结果
-        if ([_delegate respondsToSelector:@selector(KYSPickerView:selectedObject:)]) {
-            [_delegate KYSPickerView:self selectedObject:mArray];
-        }
-    }else if( KYSPickerViewDate==self.type){
-        NSLog(@"时间类型");
-        if ([_delegate respondsToSelector:@selector(KYSPickerView:selectedObject:)]) {
-            [_delegate KYSPickerView:self selectedObject:_datePicker.date];
-        }
+    }
+    //返回选择结果
+    if ([_delegate respondsToSelector:@selector(KYSPickerView:selectedObject:)]) {
+        [_delegate KYSPickerView:self selectedObject:mArray];
     }
 }
 
@@ -247,28 +209,6 @@
         return [_normalDataSource numberOfComponentsInPickerView:self];
     }
     return 1;
-}
-
-#pragma mark - KYSPickerViewDateDataSource
-- (NSDate *)p_getCurrentDate{
-    if ([_dateDataSource respondsToSelector:@selector(currentDateKYSPickerView:)]) {
-        return [_dateDataSource currentDateKYSPickerView:self];
-    }
-    return [NSDate date];
-}
-
-- (NSDate *)p_getMinDate{
-    if ([_dateDataSource respondsToSelector:@selector(minDateKYSPickerView:)]) {
-        return [_dateDataSource minDateKYSPickerView:self];
-    }
-    return [NSDate dateWithString:@"1990-01-01 00:00" format:@"yyyy-MM-dd HH:mm"];
-}
-
-- (NSDate *)p_getMaxDate{
-    if ([_dateDataSource respondsToSelector:@selector(maxDateKYSPickerView:)]) {
-        return [_dateDataSource maxDateKYSPickerView:self];
-    }
-    return [NSDate date];
 }
 
 #pragma mark - lazy load
