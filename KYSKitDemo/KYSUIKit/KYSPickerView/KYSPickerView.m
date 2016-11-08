@@ -30,8 +30,6 @@
     if (self) {
         self.backgroundColor=[UIColor colorWithWhite:0 alpha:0.15];
         
-        _type=type;
-        
         UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap)];
         [self addGestureRecognizer:tap];
         
@@ -68,10 +66,15 @@
     return self;
 }
 
+//- (void)setType:(KYSPickerViewType)type{
+//    _type=type;
+//    NSLog(@"update type：%ld",(long)_type);
+//}
+
 - (void)KYSShow{
-    if ( KYSPickerViewNormal==_type) {
+    if ( KYSPickerViewNormal==self.type) {
         [_pickView reloadAllComponents];
-    }else if( KYSPickerViewDate==_type){
+    }else if( KYSPickerViewDate==self.type){
         
     }
     self.selectView.frame=CGRectMake(0, CGRectGetHeight(self.frame), CGRectGetWidth(self.frame), 180);
@@ -91,7 +94,7 @@
 }
 
 - (void)KYSReloadData{
-    if ( KYSPickerViewNormal==_type) {
+    if ( KYSPickerViewNormal==self.type) {
         //获取列数
         self.numberOfComponents=[self p_getNumberOfComponents];
         
@@ -115,7 +118,7 @@
                 [_pickView selectRow:index inComponent:i animated:YES];
             }
         }
-    }else if( KYSPickerViewDate==_type){
+    }else if( KYSPickerViewDate==self.type){
         // 默认日期
         _datePicker.date =[self p_getCurrentDate];
         // 最小时间
@@ -137,12 +140,19 @@
 
 #pragma mark - Action
 - (void)tap{
+    if ([_delegate respondsToSelector:@selector(cancelWithPickerView:)]) {
+        [_delegate cancelWithPickerView:self];
+    }
     [self KYSHide];
 }
 
 - (void)btnAction:(UIButton *)btn{
     if(2==btn.tag){
-        [self p_selectedWithType:_type];
+        [self p_getSelected];
+    }else if(1==btn.tag){
+        if ([_delegate respondsToSelector:@selector(cancelWithPickerView:)]) {
+            [_delegate cancelWithPickerView:self];
+        }
     }
     [self KYSHide];
 }
@@ -165,10 +175,16 @@
     return [self.dataArray[component] objectAtIndex:row];
 }
 
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
+    if ([_delegate respondsToSelector:@selector(KYSPickerView:didSelectRow:inComponent:)]) {
+        return [_delegate KYSPickerView:self didSelectRow:row inComponent:component];
+    }
+}
 
 #pragma mark - private
 - (void)p_setPickerViewWithType:(KYSPickerViewType)type{
-    if ( KYSPickerViewNormal==type) {
+    self.type=type;
+    if ( KYSPickerViewNormal==self.type) {
         _pickView=[[UIPickerView alloc] init];
         _pickView.frame=CGRectMake(0, 30, _selectView.frame.size.width, _selectView.frame.size.height-30);
         _pickView.showsSelectionIndicator=YES;
@@ -176,7 +192,7 @@
         _pickView.delegate=self;
         _pickView.dataSource=self;
         [_selectView addSubview:_pickView];
-    }else if( KYSPickerViewDate==type){
+    }else if( KYSPickerViewDate==self.type){
         _datePicker = [[UIDatePicker alloc] init];
         _datePicker.frame=CGRectMake(0, 30, _selectView.frame.size.width, _selectView.frame.size.height-30);
         _datePicker.datePickerMode = UIDatePickerModeDate;
@@ -185,8 +201,8 @@
     }
 }
 
-- (void)p_selectedWithType:(KYSPickerViewType)type{
-    if ( KYSPickerViewNormal==type) {
+- (void)p_getSelected{
+    if ( KYSPickerViewNormal==self.type) {
         NSLog(@"普通类型");
         NSMutableArray *mArray=[[NSMutableArray alloc] init];
         for (int i=0; i<self.dataArray.count; i++) {
@@ -203,7 +219,7 @@
         if ([_delegate respondsToSelector:@selector(KYSPickerView:selectedObject:)]) {
             [_delegate KYSPickerView:self selectedObject:mArray];
         }
-    }else if( KYSPickerViewDate==_type){
+    }else if( KYSPickerViewDate==self.type){
         NSLog(@"时间类型");
         if ([_delegate respondsToSelector:@selector(KYSPickerView:selectedObject:)]) {
             [_delegate KYSPickerView:self selectedObject:_datePicker.date];
