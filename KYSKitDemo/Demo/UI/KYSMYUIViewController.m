@@ -12,6 +12,7 @@
 #import "KYSDatePickerView.h"
 #import "KYSAlertView.h"
 #import "KYSTextView.h"
+#import "KYSLinkagePickerView.h"
 
 @interface KYSMYUIViewController()<KYSPickerViewDelegate,KYSPickerViewDataSource,KYSDatePickerViewDelegate,KYSDatePickerViewDataSource,KYSTextFieldDelegate,KYSTextViewDelegate>
 
@@ -72,6 +73,15 @@
     textView.frame=CGRectMake(20, 300, 150, 30);
     [self.view addSubview:textView];
     
+    UIButton *btn3=[[UIButton alloc] init];
+    btn3.tag=4;
+    btn3.frame=CGRectMake(20, 350, 150, 30);
+    btn3.backgroundColor=[UIColor blueColor];
+    [btn3 setTitle:@"封装LinkagePickerView" forState:UIControlStateNormal];
+    btn3.titleLabel.font=[UIFont systemFontOfSize:15.];
+    [btn3 addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:btn3];
+    
     
 //    UIButton *btn3=[[UIButton alloc] init];
 //    btn3.tag=4;
@@ -109,6 +119,50 @@
                                                                   NSLog(@"%ld, %@",(long)index,object);
         }];
         [alertView KYSShow];
+    }else if(4==btn.tag){
+        NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"KYSLinkageData" ofType:@"plist"];
+        NSDictionary *dic = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+        NSArray *dataArray = dic[@"data"];
+        
+        NSLog(@"%@",dataArray);
+        
+        KYSLinkagePickerView *linkagePickerView=[[KYSLinkagePickerView alloc] initWithFrame:self.view.superview.bounds];
+        [linkagePickerView setDataWithArray:dataArray analyzeBlock:^NSArray *(NSArray * array) {
+            
+            //获取1层数据
+            NSMutableArray *mArray00=[[NSMutableArray alloc] init];
+            NSMutableArray *mArray01=[[NSMutableArray alloc] init];
+            NSMutableArray *mArray02=[[NSMutableArray alloc] init];
+            
+            for (NSDictionary *dic0 in  array) {
+                
+                //获取2层数据
+                NSMutableArray *mArray10=[[NSMutableArray alloc] init];
+                NSMutableArray *mArray11=[[NSMutableArray alloc] init];
+                for (NSDictionary *dic1 in dic0[@"data"]) {
+                    
+                    //获取3层数据
+                    NSMutableArray *mArray20=[[NSMutableArray alloc] init];
+                    for (NSDictionary *dic2 in dic1[@"data"]) {
+                         [mArray20 addObject:dic2[@"name"]];
+                    }
+                    [mArray10 addObject:dic1[@"name"]];
+                    [mArray11 addObject:mArray20];
+                    
+                }
+                
+                [mArray00 addObject:dic0[@"name"]];
+                [mArray01 addObject:mArray10];
+                [mArray02 addObject:mArray11];
+            }
+            
+            NSLog(@"1：%@",mArray00);
+            NSLog(@"2：%@",mArray01);
+            NSLog(@"3：%@",mArray02);
+            
+            return @[mArray00,mArray01,mArray02];
+        }];
+        [linkagePickerView KYSShow];
     }
 }
 

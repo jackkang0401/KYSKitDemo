@@ -8,7 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
+
+typedef NSArray* (^KYSLinkagePickerViewAnalyzeOriginData)(NSArray*);
+
 @interface KYSLinkagePickerView : UIView
+
+- (void)setDataWithArray:(NSArray *) originArray analyzeBlock:(KYSLinkagePickerViewAnalyzeOriginData) block;
+
+
+- (void)KYSShow;
+
+- (void)KYSHide;
+
+- (void)KYSReloadData;
+
 
 @end
 

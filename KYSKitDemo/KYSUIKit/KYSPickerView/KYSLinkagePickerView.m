@@ -18,7 +18,6 @@
 
 @property(nonatomic,strong)NSMutableArray *currentProvinceArray;
 @property(nonatomic,strong)NSMutableArray *currentCityArray;
-@property(nonatomic,strong)NSMutableArray *currentCenterArray;
 
 @property(nonatomic,assign)NSInteger selectedProvinceIndex;
 @property(nonatomic,assign)NSInteger selectedCityIndex;
@@ -28,6 +27,12 @@
 @property(nonatomic,assign)NSInteger oldSelectedCityIndex;
 @property(nonatomic,assign)NSInteger oldSelectedCenterIndex;
 
+
+
+//
+@property(nonatomic,strong)KYSPickerView *pickerView;
+@property(nonatomic,strong)NSArray *dataArray;
+
 @end
 
 
@@ -36,11 +41,50 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     self=[super initWithFrame:frame];
     if (self) {
+        self.backgroundColor=[UIColor colorWithWhite:0 alpha:0.15];
+        
         self.selectedProvinceIndex = -1;
         self.selectedCityIndex = -1;
         self.selectedCenterIndex = -1;
+        
+        self.pickerView=[[KYSPickerView alloc] initWithFrame:self.bounds];
     }
     return self;
+}
+
+- (void)setDataWithArray:(NSArray *) originArray analyzeBlock:(KYSLinkagePickerViewAnalyzeOriginData) block{
+    self.dataArray=block(originArray);
+}
+
+- (void)KYSShow{
+    
+    [[self p_activityWindow] addSubview:self];
+    
+    [self.pickerView KYSReloadData];
+    self.pickerView.frame=self.bounds;
+    __weak typeof (self) wSelf=self;
+    [UIView animateWithDuration:0.5 animations:^{
+        typeof(wSelf) sSelf=wSelf;
+        sSelf.pickerView.frame=CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
+    } completion:^(BOOL finished) {
+        typeof(wSelf) sSelf=wSelf;
+        sSelf.pickerView.frame=CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
+    }];
+}
+
+- (void)KYSHide{
+    __weak typeof (self) wSelf=self;
+    [UIView animateWithDuration:0.5 animations:^{
+        typeof(wSelf) sSelf=wSelf;
+        sSelf.pickerView.frame=CGRectMake(0, 180, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
+    } completion:^(BOOL finished) {
+        typeof(wSelf) sSelf=wSelf;
+        [sSelf removeFromSuperview];
+    }];
+}
+
+- (void)KYSReloadData{
+    [self.pickerView KYSReloadData];
 }
 
 - (IBAction)pickerAction:(UIButton *)btn {
@@ -117,50 +161,24 @@
 
 #pragma mark - KYSPickerViewNormalDataSource
 - (NSInteger)numberOfComponentsInPickerView:(KYSPickerView *)pickerView{
-    if (pickerView==_centerPickerView) {
-        return 1;
-    }
-    return 2;
+    return [self.dataArray count];
 }
 
 //数据源
 - (NSArray *)dataSourceKYSPickerView:(KYSPickerView *)pickerView componentIndex:(NSInteger)index{
     NSLog(@"获取数据源:componentIndex：%ld",(long)index);
-    NSString *str=@"";
-    if (pickerView==_centerPickerView) {
-        if (-1 != self.selectedCityIndex) {
-            [self.currentCenterArray removeAllObjects];
-            NSArray *cArray=self.centerArray[self.selectedProvinceIndex][@"data"][self.selectedCityIndex][@"data"];
-            for (NSDictionary *dic in cArray){
-                [self.currentCenterArray addObject:dic[@"name"]];
-            }
-            self.selectedCenterIndex=0;
-            return self.currentCenterArray;
-        }else{
-            NSLog(@"请选择城市");
-        }
-    }else if(_cityPickerView==pickerView){
-        if (0==index) {
+    
+    if (0==index) {
             if (-1 == self.selectedProvinceIndex) {
-                [self.currentProvinceArray removeAllObjects];
-                for (NSDictionary *dic in self.centerArray){
-                    [self.currentProvinceArray addObject:dic[@"name"]];
-                }
                 self.selectedProvinceIndex=0;
-                return self.currentProvinceArray;
+                return self.dataArray[index];
             }
             return self.currentProvinceArray;
-        }else if(1 == index){
+    }else if(1 == index){
             if (-1 != self.selectedProvinceIndex) {
-                [self.currentCityArray removeAllObjects];
-                NSArray *cArray=self.centerArray[self.selectedProvinceIndex][@"data"];
-                for (NSDictionary *dic in cArray){
-                    [self.currentCityArray addObject:dic[@"name"]];
-                }
                 self.selectedCityIndex=0;
-                return self.currentCityArray;
+                return self.dataArray[index][0];
             }
-        }
     }
     return nil;
 }
@@ -215,18 +233,6 @@
     return _cityPickerView;
 }
 
-- (NSArray *)centerArray{
-    if (!_centerArray) {
-        NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"KYSLinkageData" ofType:@"plist"];
-        NSDictionary *dic = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
-        _centerArray=dic[@"data"];
-    }
-    return _centerArray;
-}
-
-//转换数据(实在已知数据结构的情况下，进行转换)
-
-
 #pragma mark - lazy load
 - (NSMutableArray *)currentProvinceArray{
     if (!_currentProvinceArray) {
@@ -242,11 +248,33 @@
     return _currentCityArray;
 }
 
-- (NSMutableArray *)currentCenterArray{
-    if (!_currentCenterArray) {
-        _currentCenterArray=[[NSMutableArray alloc] init];
+- (KYSPickerView *)pickerView{
+    if (!_pickerView) {
+        _pickerView=[[KYSPickerView alloc] initWithFrame:self.bounds];
+        _pickerView.backgroundColor=[UIColor clearColor];
+        _pickerView.delegate=self;
+        _pickerView.normalDataSource=self;
     }
-    return _currentCenterArray;
+    return _pickerView;
 }
+
+#pragma mark - private
+// 获取当前处于activity状态的Window
+- (UIWindow *)p_activityWindow{
+    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+    if(window.windowLevel != UIWindowLevelNormal){
+        NSArray *windows = [[UIApplication sharedApplication] windows];
+        for(UIWindow *tmpWin in windows){
+            if(tmpWin.windowLevel == UIWindowLevelNormal){
+                window = tmpWin;
+                break;
+            }
+        }
+    }
+    return window;
+}
+
+
+
 
 @end
