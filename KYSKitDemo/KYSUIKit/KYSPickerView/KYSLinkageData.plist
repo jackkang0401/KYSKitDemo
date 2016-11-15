@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+   KYSLinkageData.plist
+   KYSKitDemo
+
+   Created by Liu Zhao on 2016/11/15.
+   Copyright (c) 2016年 Kang YongShuai. All rights reserved.
+-->
+<plist version="1.0"><dict><key>data</key><array><dict><key>data</key><array><dict><key>data</key><array><dict><key>id</key><integer>60</integer><key>name</key><string>美国悦宝园昆明北市早教中心</string></dict><dict><key>id</key><integer>100</integer><key>name</key><string>美国悦宝园昆明云都国际早教中心</string></dict></array><key>name</key><string>昆明</string></dict></array><key>name</key><string>云南省</string></dict><dict><key>data</key><array><dict><key>data</key><array><dict><key>id</key><integer>52</integer><key>name</key><string>美国悦宝园杭州丰元国际早教中心</string></dict><dict><key>id</key><integer>104</integer><key>name</key><string>美国悦宝园杭州江干区凤起早教中心</string></dict><dict><key>id</key><integer>80</integer><key>name</key><string>美国悦宝园杭州金沙天街早教中心</string></dict><dict><key>id</key><integer>101</integer><key>name</key><string>美国悦宝园杭州萧山早教中心</string></dict><dict><key>id</key><integer>87</integer><key>name</key><string>美国悦宝园杭州中赢国际早教中心</string></dict></array><key>name</key><string>杭州</string></dict><dict><key>data</key><array><dict><key>id</key><integer>106</integer><key>name</key><string>美国悦宝园浙江宁波文化广场早教中心</string></dict><dict><key>id</key><integer>95</integer><key>name</key><string>美国悦宝园浙江宁波余姚早教中心</string></dict></array><key>name</key><string>宁波</string></dict></array><key>name</key><string>浙江省</string></dict><dict><key>data</key><array><dict><key>data</key><array><dict><key>id</key><integer>123</integer><key>name</key><string>美国悦宝园重庆万州万达广场早教中心</string></dict></array><key>name</key><string>万州</string></dict></array><key>name</key><string>重庆市</string></dict></array></dict></plist>
