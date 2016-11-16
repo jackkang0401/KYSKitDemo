@@ -521,10 +521,10 @@
 			isa = PBXGroup;
 			children = (
 				255C1D901DDB3206009EFD32 /* KYSLinkageData.plist */,
-				F1410CEF1DC5FD41006F8892 /* KYSPickerView.h */,
-				F1410CF01DC5FD41006F8892 /* KYSPickerView.m */,
 				F1F8BAEB1DD21DA30024233E /* KYSDatePickerView.h */,
 				F1F8BAEC1DD21DA30024233E /* KYSDatePickerView.m */,
+				F1410CEF1DC5FD41006F8892 /* KYSPickerView.h */,
+				F1410CF01DC5FD41006F8892 /* KYSPickerView.m */,
 				F1F8BAEE1DD228600024233E /* KYSLinkagePickerView.h */,
 				F1F8BAEF1DD228600024233E /* KYSLinkagePickerView.m */,
 			);

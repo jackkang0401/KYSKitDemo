@@ -12,10 +12,13 @@
 
 @property(nonatomic,strong)NSMutableArray *dataArray;
 @property(nonatomic,assign)NSInteger numberOfComponents;//时间pickerView无效
+@property(nonatomic,strong)NSArray *widthForComponentsArray;
+@property(nonatomic,strong)NSArray *heightForComponentsArray;
 
 @property (nonatomic,strong) UIView *selectView;
 @property (nonatomic,strong) UIPickerView *pickView;
 
+@property(nonatomic,copy) KYSPickerViewHide hideBlock;
 
 @end
 
@@ -58,18 +61,17 @@
         [_selectView addSubview:btn2];
         
         [self p_setPickerView];
-        
     }
     return self;
 }
 
-//- (void)setType:(KYSPickerViewType)type{
-//    _type=type;
-//    NSLog(@"update type：%ld",(long)_type);
-//}
-
 - (void)KYSShow{
-    [_pickView reloadAllComponents];
+    [self KYSShowWithHideBlock:nil];
+}
+
+- (void)KYSShowWithHideBlock:(KYSPickerViewHide)block{
+    self.hideBlock=block;
+    [self.pickView reloadAllComponents];
     self.selectView.frame=CGRectMake(0, CGRectGetHeight(self.frame), CGRectGetWidth(self.frame), 180);
     [UIView animateWithDuration:0.5 animations:^{
         self.selectView.frame=CGRectMake(0, CGRectGetHeight(self.frame)-180, CGRectGetWidth(self.frame), 180);
@@ -79,33 +81,45 @@
 }
 
 - (void)KYSHide{
+    [self KYSHideNeedRemove:YES];
+}
+
+- (void)KYSHideNeedRemove:(BOOL) needRemove{
     [UIView animateWithDuration:0.5 animations:^{
         self.selectView.frame=CGRectMake(0, CGRectGetHeight(self.frame), CGRectGetWidth(self.frame), 180);
     } completion:^(BOOL finished) {
-        [self removeFromSuperview];
+        if (needRemove) {
+            [self removeFromSuperview];
+        }
+        if (self.hideBlock) {
+            self.hideBlock();
+        }
     }];
 }
 
 - (void)KYSReloadData{
+    //NSLog(@"KYSReloadData");
     //获取列数
     self.numberOfComponents=[self p_getNumberOfComponents];
         
     //获取数据列表
     [self.dataArray removeAllObjects];
     for (int i=0; i<self.numberOfComponents; i++) {
-        NSArray *array=[self p_getDataSourceWithComponentIndex:i];
+        NSArray *array=[self p_getDataSourceInComponent:i];
         if (!array) {
             array=@[];
         }
         [self.dataArray addObject:array];
     }
+    //NSLog(@"%@,%@",self.delegate,self.normalDataSource);
+    //NSLog(@"KYSReloadData：%@",self.dataArray);
         
     //刷新数据
     [_pickView reloadAllComponents];
         
     //设置选中项Index
     for (int i=0; i<self.dataArray.count; i++) {
-        NSInteger index=[self p_getSelectedIndexWithComponentIndex:i];
+        NSInteger index=[self p_getSelectedIndexInComponent:i];
         if (index>=0 && index<((NSArray *)self.dataArray[i]).count) {
             [_pickView selectRow:index inComponent:i animated:YES];
         }
@@ -145,8 +159,12 @@
     return ((NSArray *)self.dataArray[component]).count;
 }
 
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component{
+    return [self p_getWidthInComponent:component];
+}
+
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component{
-    return 30;
+    return [self p_getRowHeightInComponent:component];
 }
 
 - (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
@@ -162,6 +180,7 @@
 
 #pragma mark - private
 - (void)p_setPickerView{
+    //NSLog(@"p_setPickerView");
     _pickView=[[UIPickerView alloc] init];
     _pickView.frame=CGRectMake(0, 30, _selectView.frame.size.width, _selectView.frame.size.height-30);
     _pickView.showsSelectionIndicator=YES;
@@ -175,33 +194,20 @@
     NSMutableArray *mArray=[[NSMutableArray alloc] init];
     for (int i=0; i<self.dataArray.count; i++) {
         NSInteger row=[self.pickView selectedRowInComponent:i];
-        //NSLog(@"%ld",(long)row);
-        if (((NSArray *)self.dataArray[i]).count<=0) {
-            [mArray addObject:@""];
-        }else{
-            NSObject *object=self.dataArray[i][row];
-            [mArray addObject:object];
-        }
+        [mArray addObject:@(row)];
     }
     //返回选择结果
-    if ([_delegate respondsToSelector:@selector(KYSPickerView:selectedObject:)]) {
-        [_delegate KYSPickerView:self selectedObject:mArray];
+    if ([_delegate respondsToSelector:@selector(KYSPickerView:selectedIndexArray:)]) {
+        [_delegate KYSPickerView:self selectedIndexArray:mArray];
     }
 }
 
 #pragma mark - KYSPickerViewNormalDataSource
-- (NSArray *)p_getDataSourceWithComponentIndex:(NSInteger)index{
-    if ([_normalDataSource respondsToSelector:@selector(dataSourceKYSPickerView:componentIndex:)]) {
-        return [_normalDataSource dataSourceKYSPickerView:self componentIndex:index];
+- (NSArray *)p_getDataSourceInComponent:(NSInteger)component{
+    if ([_normalDataSource respondsToSelector:@selector(KYSPickerView:dataInComponent:)]) {
+        return [_normalDataSource KYSPickerView:self dataInComponent:component];
     }
     return @[];
-}
-
-- (NSInteger)p_getSelectedIndexWithComponentIndex:(NSInteger)index{
-    if ([_normalDataSource respondsToSelector:@selector(selectedIndexKYSPickerView:componentIndex:)]) {
-        return [_normalDataSource selectedIndexKYSPickerView:self componentIndex:index];
-    }
-    return 0;
 }
 
 - (NSInteger)p_getNumberOfComponents{
@@ -209,6 +215,27 @@
         return [_normalDataSource numberOfComponentsInPickerView:self];
     }
     return 1;
+}
+
+- (NSInteger)p_getSelectedIndexInComponent:(NSInteger)component{
+    if ([_normalDataSource respondsToSelector:@selector(KYSPickerView:selectedIndexInComponent:)]) {
+        return [_normalDataSource KYSPickerView:self selectedIndexInComponent:component];
+    }
+    return 0;
+}
+
+- (NSInteger)p_getWidthInComponent:(NSInteger)component{
+    if ([_normalDataSource respondsToSelector:@selector(KYSPickerView:widthForComponent:)]) {
+        return [_normalDataSource KYSPickerView:self widthForComponent:component];
+    }
+    return CGRectGetWidth(self.frame)/self.dataArray.count;
+}
+
+- (NSInteger)p_getRowHeightInComponent:(NSInteger)component{
+    if ([_normalDataSource respondsToSelector:@selector(KYSPickerView:rowHeightForComponent:)]) {
+        return [_normalDataSource KYSPickerView:self rowHeightForComponent:component];
+    }
+    return 30;
 }
 
 #pragma mark - lazy load

@@ -11,152 +11,99 @@
 
 @interface KYSLinkagePickerView()<KYSPickerViewDelegate,KYSPickerViewDataSource>
 
-@property(nonatomic,strong)KYSPickerView *cityPickerView;
-@property(nonatomic,strong)KYSPickerView *centerPickerView;
+@property(nonatomic,weak) UIWindow *window;
+@property(nonatomic,strong) KYSPickerView *pickerView;
+@property(nonatomic,strong) NSArray *dataArray;
 
-@property(nonatomic,strong)NSArray *centerArray;
-
-@property(nonatomic,strong)NSMutableArray *currentProvinceArray;
-@property(nonatomic,strong)NSMutableArray *currentCityArray;
-
-@property(nonatomic,assign)NSInteger selectedProvinceIndex;
-@property(nonatomic,assign)NSInteger selectedCityIndex;
-@property(nonatomic,assign)NSInteger selectedCenterIndex;
-
-@property(nonatomic,assign)NSInteger oldSelectedProvinceIndex;
-@property(nonatomic,assign)NSInteger oldSelectedCityIndex;
-@property(nonatomic,assign)NSInteger oldSelectedCenterIndex;
-
-
-
-//
-@property(nonatomic,strong)KYSPickerView *pickerView;
-@property(nonatomic,strong)NSArray *dataArray;
+@property(nonatomic,strong)NSArray *componentWidthArray; //每项的宽度
+@property(nonatomic,strong)NSArray *componentHeightArray;//每项的高度
+@property(nonatomic,strong)NSMutableArray *selectedIndexArray;
+@property(nonatomic,copy)KYSLinkagePickerViewCompleteSelected completeBlock;//选择完成回调
 
 @end
 
 
 @implementation KYSLinkagePickerView
 
-- (instancetype)initWithFrame:(CGRect)frame{
-    self=[super initWithFrame:frame];
++ (instancetype)KYSShowWithAnalyzeBlock:(KYSLinkagePickerViewAnalyzeOriginData)analyzeBlock
+                          completeBlock:(KYSLinkagePickerViewCompleteSelected)completeBlock{
+    KYSLinkagePickerView *linkagePickerView=[[KYSLinkagePickerView alloc] init];
+    [linkagePickerView setDataWithSelectedIndexArray:nil analyzeBlock:analyzeBlock];
+    linkagePickerView.completeBlock=completeBlock;
+    [linkagePickerView KYSShow];
+    return linkagePickerView;
+}
+
+- (instancetype)init{
+    self=[super init];
     if (self) {
-        self.backgroundColor=[UIColor colorWithWhite:0 alpha:0.15];
-        
-        self.selectedProvinceIndex = -1;
-        self.selectedCityIndex = -1;
-        self.selectedCenterIndex = -1;
-        
-        self.pickerView=[[KYSPickerView alloc] initWithFrame:self.bounds];
+        self.backgroundColor=[UIColor clearColor];
+        self.frame=self.window.bounds;
+        [self addSubview:self.pickerView];
     }
     return self;
 }
 
-- (void)setDataWithArray:(NSArray *) originArray analyzeBlock:(KYSLinkagePickerViewAnalyzeOriginData) block{
-    self.dataArray=block(originArray);
+- (void)setDataWithSelectedIndexArray:(NSArray *)selectedIndexArray
+                         analyzeBlock:(KYSLinkagePickerViewAnalyzeOriginData) block{
+    self.dataArray=block();
+    //未设置默认选项的，设置成-1
+    [self.selectedIndexArray removeAllObjects];
+    for (NSUInteger i=0; i<self.dataArray.count; i++) {
+        if (i<selectedIndexArray.count) {
+            [self.selectedIndexArray addObject:selectedIndexArray[i]];
+        }else{
+            [self.selectedIndexArray addObject:@(-1)];
+        }
+    }
+}
+
+- (void)setDataWithComponentWidthArray:(NSArray *)array{
+    self.componentWidthArray=array;
+}
+
+- (void)setDataWithComponentHeightArray:(NSArray *)array{
+    self.componentHeightArray=array;
 }
 
 - (void)KYSShow{
-    
-    [[self p_activityWindow] addSubview:self];
-    
+    [self.window addSubview:self];
     [self.pickerView KYSReloadData];
-    self.pickerView.frame=self.bounds;
-    __weak typeof (self) wSelf=self;
-    [UIView animateWithDuration:0.5 animations:^{
-        typeof(wSelf) sSelf=wSelf;
-        sSelf.pickerView.frame=CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
-    } completion:^(BOOL finished) {
-        typeof(wSelf) sSelf=wSelf;
-        sSelf.pickerView.frame=CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
+    [self.pickerView KYSShowWithHideBlock:^{
+        [self removeFromSuperview];
     }];
 }
-
-- (void)KYSHide{
-    __weak typeof (self) wSelf=self;
-    [UIView animateWithDuration:0.5 animations:^{
-        typeof(wSelf) sSelf=wSelf;
-        sSelf.pickerView.frame=CGRectMake(0, 180, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
-    } completion:^(BOOL finished) {
-        typeof(wSelf) sSelf=wSelf;
-        [sSelf removeFromSuperview];
-    }];
-}
-
-- (void)KYSReloadData{
-    [self.pickerView KYSReloadData];
-}
-
-- (IBAction)pickerAction:(UIButton *)btn {
-    if(1==btn.tag){
-        //取消时需要恢复
-        self.oldSelectedProvinceIndex=self.selectedProvinceIndex;
-        self.oldSelectedCityIndex=self.selectedCityIndex;
-        self.oldSelectedCenterIndex=self.selectedCenterIndex;
-        
-        NSLog(@"保存：%ld, %ld, %ld",(long)self.selectedProvinceIndex,(long)self.selectedCityIndex,(long)self.selectedCenterIndex);
-        
-        [self.cityPickerView KYSShow];
-    }else if(2==btn.tag){
-        if (-1 != self.selectedCityIndex) {
-            //取消时需要恢复
-            self.oldSelectedCenterIndex=self.selectedCenterIndex;
-            NSLog(@"保存：%ld, %ld, %ld",(long)self.selectedProvinceIndex,(long)self.selectedCityIndex,(long)self.selectedCenterIndex);
-            [self.centerPickerView KYSShow];
-        }else{
-            NSLog(@"请选择城市");
-        }
-    }
-}
-
 
 #pragma mark - KYSPickerViewDelegate
-- (void)cancelWithPickerView:(KYSPickerView *)pickerView{
-    
-    NSLog(@"cancelWithPickerView:");
-    
-    if (pickerView==_cityPickerView) {
-        self.selectedProvinceIndex=self.oldSelectedProvinceIndex;
-        self.selectedCityIndex=self.oldSelectedCityIndex;
-        self.selectedCenterIndex=self.oldSelectedCenterIndex;
-        NSLog(@"恢复：%ld, %ld, %ld",(long)self.selectedProvinceIndex,(long)self.selectedCityIndex,(long)self.selectedCenterIndex);
-    }else if(pickerView == _centerPickerView){
-        self.selectedCenterIndex=self.oldSelectedCenterIndex;
-        NSLog(@"恢复：%ld, %ld, %ld",(long)self.selectedProvinceIndex,(long)self.selectedCityIndex,(long)self.selectedCenterIndex);
-    }
-}
-
-- (void)KYSPickerView:(KYSPickerView *)pickerView selectedObject:(id)object{
-    NSLog(@"KYSPickerView selected: %@",object);
-    if(_cityPickerView == pickerView){
-        //self.centerArray[self.selectedProvinceIndex][@"data"][self.selectedCityIndex][@"name"];
-    }else if(_centerPickerView == pickerView){
-        //self.centerArray[self.selectedProvinceIndex][@"data"][self.selectedCityIndex][@"data"][self.selectedCenterIndex][@"name"];
+- (void)KYSPickerView:(KYSPickerView *)pickerView selectedIndexArray:(NSArray *)selectedIndexArray{
+    if (self.completeBlock) {
+        self.completeBlock(selectedIndexArray);
     }
 }
 
 
-//
+//选中动画结束位置
 - (void)KYSPickerView:(KYSPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-    NSString *str=@"";
-    NSLog(@"动画停留位置start：%@,%ld,%ld",str,(long)component,(long)row);
-    if(_cityPickerView == pickerView){
-        str=@"cityPickerView";
-        if (0==component) {
-            self.selectedProvinceIndex = row;
-            self.selectedCityIndex = -1;
-            self.selectedCenterIndex = -1;
-            //用self调用会创建新对象
-            [_cityPickerView KYSReloadData];
-        }else if (1==component) {
-            //self.selectedProvinceIndex = row;
-            self.selectedCityIndex = row;
-            self.selectedCenterIndex = -1;
-            //最后一项不需要刷新,以为会在刷新之前获取获取默认选项，还会回到原来选中的项
-            //[_cityPickerView KYSReloadData];
+    //NSLog(@"动画停留位置start component：%ld,selected：%ld",(long)component,(long)row);
+    for (NSInteger i=0; i<self.dataArray.count; i++) {
+        //之前的不变
+        if (i < component) {
+            continue;
+        }
+        //刷新后边的
+        if (i==component) {
+            [self.selectedIndexArray replaceObjectAtIndex:i withObject:@(row)];
+        }else{
+            [self.selectedIndexArray replaceObjectAtIndex:i withObject:@(-1)];
         }
     }
-    NSLog(@"动画停留位置end：%@,%ld,%ld",str,(long)component,(long)row);
+    //最后一个component不用刷新
+    if (component == (self.dataArray.count-1)) {
+        return;
+    }
+    //刷新之后的Component
+    //NSLog(@"刷新之后的Component");
+    [self.pickerView KYSReloadData];
 }
 
 #pragma mark - KYSPickerViewNormalDataSource
@@ -164,103 +111,72 @@
     return [self.dataArray count];
 }
 
-//数据源
-- (NSArray *)dataSourceKYSPickerView:(KYSPickerView *)pickerView componentIndex:(NSInteger)index{
-    NSLog(@"获取数据源:componentIndex：%ld",(long)index);
-    
-    if (0==index) {
-            if (-1 == self.selectedProvinceIndex) {
-                self.selectedProvinceIndex=0;
-                return self.dataArray[index];
-            }
-            return self.currentProvinceArray;
-    }else if(1 == index){
-            if (-1 != self.selectedProvinceIndex) {
-                self.selectedCityIndex=0;
-                return self.dataArray[index][0];
-            }
+//配置数据源
+- (NSArray *)KYSPickerView:(KYSPickerView *)pickerView dataInComponent:(NSInteger)component{
+    //NSLog(@"获取数据源0：componentIndex：%ld",(long)component);
+    if (component >= self.dataArray.count) {
+        return nil;
     }
-    return nil;
+    
+    for (NSInteger i=0; i<self.dataArray.count; i++) {
+        if (i == component) {
+            if (-1==[self.selectedIndexArray[component] integerValue]) {
+                [self.selectedIndexArray replaceObjectAtIndex:component withObject:@(0)];
+            }
+            break;
+        }
+    }
+    //选择数据源
+    NSArray *cArray=self.dataArray[component];
+    for (NSInteger i=0; i < component; i++) {
+        //NSLog(@"%@",cArray);
+        cArray=cArray[[self.selectedIndexArray[i] integerValue]];
+    }
+    return cArray;
 }
 
 //默认选中哪一项
-- (NSInteger)selectedIndexKYSPickerView:(KYSPickerView *)pickerView componentIndex:(NSInteger)index{
-    NSInteger row=0;
-    NSString *str=@"";
-    if (pickerView==_centerPickerView) {
-        str=@"centerPickerView";
-        if (0==index) {
-            row = self.selectedCenterIndex;
-        }
-    }else if (_cityPickerView==pickerView) {
-        str=@"cityPickerView";
-        if (0==index) {
-            row = self.selectedProvinceIndex;
-        }else if (1==index) {
-            row = self.selectedCityIndex;
-        }else if (2==index) {
-            row = self.selectedCenterIndex;
-        }
+- (NSInteger)KYSPickerView:(KYSPickerView *)pickerView selectedIndexInComponent:(NSInteger)component{
+    //NSLog(@"默认选中哪一项 component：%ld,selected：%ld",(long)component,(long)[self.selectedIndexArray[component] integerValue]);
+    return [self.selectedIndexArray[component] integerValue];
+}
+
+- (NSInteger)KYSPickerView:(KYSPickerView *)pickerView widthForComponent:(NSInteger)component{
+    if (component<self.componentWidthArray.count) {
+        return [self.componentWidthArray[component] integerValue];
     }
-    NSLog(@"默认选中哪一项：%@,%ld,%ld",str,(long)index,(long)row);
-    return row;
+    return CGRectGetWidth(self.frame)/self.dataArray.count;
 }
 
-#pragma mark - 城市选择
-- (KYSPickerView *)cityPickerView{
-    //if (!_cityPickerView) {
-    //父视图的frame
-    CGRect frame=CGRectMake(0, 0, self.frame.size.width , self.frame.size.width);
-    _cityPickerView=[[KYSPickerView alloc] initWithFrame:frame];
-    _cityPickerView.delegate=self;
-    _cityPickerView.normalDataSource=self;
-    [self addSubview:_cityPickerView];
-    //}
-    return _cityPickerView;
-}
-
-#pragma mark - 中心选择
-- (KYSPickerView *)centerPickerView{
-    //if (!_centerPickerView) {
-    //父视图的frame
-    CGRect frame=CGRectMake(0, 0, self.frame.size.width , self.frame.size.width);
-    _centerPickerView=[[KYSPickerView alloc] initWithFrame:frame];
-    _centerPickerView.delegate=self;
-    _centerPickerView.normalDataSource=self;
-    [self addSubview:_centerPickerView];
-    //}
+- (NSInteger)KYSPickerView:(KYSPickerView *)pickerView rowHeightForComponent:(NSInteger)component{
     
-    return _cityPickerView;
+    if (component<self.componentHeightArray.count) {
+        return [self.componentHeightArray[component] integerValue];
+    }
+    return 30;
 }
 
 #pragma mark - lazy load
-- (NSMutableArray *)currentProvinceArray{
-    if (!_currentProvinceArray) {
-        _currentProvinceArray=[[NSMutableArray alloc] init];
-    }
-    return _currentProvinceArray;
-}
-
-- (NSMutableArray *)currentCityArray{
-    if (!_currentCityArray) {
-        _currentCityArray=[[NSMutableArray alloc] init];
-    }
-    return _currentCityArray;
-}
-
 - (KYSPickerView *)pickerView{
     if (!_pickerView) {
         _pickerView=[[KYSPickerView alloc] initWithFrame:self.bounds];
-        _pickerView.backgroundColor=[UIColor clearColor];
+        //_pickerView.backgroundColor=[UIColor clearColor];
         _pickerView.delegate=self;
         _pickerView.normalDataSource=self;
     }
     return _pickerView;
 }
 
+- (NSMutableArray *)selectedIndexArray{
+    if (!_selectedIndexArray) {
+        _selectedIndexArray=[[NSMutableArray alloc] init];
+    }
+    return _selectedIndexArray;
+}
+
 #pragma mark - private
 // 获取当前处于activity状态的Window
-- (UIWindow *)p_activityWindow{
+- (UIWindow *)window{
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];
     if(window.windowLevel != UIWindowLevelNormal){
         NSArray *windows = [[UIApplication sharedApplication] windows];

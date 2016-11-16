@@ -124,17 +124,15 @@
         NSDictionary *dic = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
         NSArray *dataArray = dic[@"data"];
         
-        NSLog(@"%@",dataArray);
-        
-        KYSLinkagePickerView *linkagePickerView=[[KYSLinkagePickerView alloc] initWithFrame:self.view.superview.bounds];
-        [linkagePickerView setDataWithArray:dataArray analyzeBlock:^NSArray *(NSArray * array) {
-            
+        //NSLog(@"%@",dataArray);
+        //注意数据转换
+        [KYSLinkagePickerView KYSShowWithAnalyzeBlock:^NSArray *() {
             //获取1层数据
             NSMutableArray *mArray00=[[NSMutableArray alloc] init];
             NSMutableArray *mArray01=[[NSMutableArray alloc] init];
             NSMutableArray *mArray02=[[NSMutableArray alloc] init];
             
-            for (NSDictionary *dic0 in  array) {
+            for (NSDictionary *dic0 in dataArray) {
                 
                 //获取2层数据
                 NSMutableArray *mArray10=[[NSMutableArray alloc] init];
@@ -144,7 +142,7 @@
                     //获取3层数据
                     NSMutableArray *mArray20=[[NSMutableArray alloc] init];
                     for (NSDictionary *dic2 in dic1[@"data"]) {
-                         [mArray20 addObject:dic2[@"name"]];
+                         [mArray20 addObject:[dic2[@"name"] stringByReplacingOccurrencesOfString:@"美国悦宝园" withString:@""]];
                     }
                     [mArray10 addObject:dic1[@"name"]];
                     [mArray11 addObject:mArray20];
@@ -156,13 +154,14 @@
                 [mArray02 addObject:mArray11];
             }
             
-            NSLog(@"1：%@",mArray00);
-            NSLog(@"2：%@",mArray01);
-            NSLog(@"3：%@",mArray02);
-            
+//            NSLog(@"1：%@",mArray00);
+//            NSLog(@"2：%@",mArray01);
+//            NSLog(@"3：%@",mArray02);
+            //NSLog(@"%@",@[mArray00,mArray01,mArray02]);
             return @[mArray00,mArray01,mArray02];
+        } completeBlock:^(NSArray * selectedArray) {
+            NSLog(@"%@",selectedArray);
         }];
-        [linkagePickerView KYSShow];
     }
 }
 

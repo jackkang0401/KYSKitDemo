@@ -11,6 +11,8 @@
 @protocol KYSPickerViewDelegate;
 @protocol KYSPickerViewDataSource;
 
+typedef void (^KYSPickerViewHide)();
+
 @interface KYSPickerView : UIView
 
 @property(nonatomic,weak)id<KYSPickerViewDelegate> delegate;
@@ -22,7 +24,13 @@
 
 - (void)KYSShow;
 
+- (void)KYSShowWithHideBlock:(KYSPickerViewHide)block;
+
+//隐藏后移除
 - (void)KYSHide;
+
+//隐藏后是否从父视图移除
+- (void)KYSHideNeedRemove:(BOOL)needRemove;
 
 - (void)KYSReloadData;
 
@@ -33,13 +41,11 @@
 @protocol KYSPickerViewDelegate <NSObject>
 
 @optional
-/*
- 普通类型：返回对应component的数组
- 时间类型：返回NSdate对象
- */
-- (void)KYSPickerView:(KYSPickerView *)pickerView selectedObject:(id)object;
 
 - (void)cancelWithPickerView:(KYSPickerView *)pickerView;
+
+//返回选中的index数组
+- (void)KYSPickerView:(KYSPickerView *)pickerView selectedIndexArray:(NSArray *)selectedIndexArray;
 
 - (void)KYSPickerView:(KYSPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component;
 
@@ -52,13 +58,17 @@
 
 @required
 //默认 @[]
-- (NSArray *)dataSourceKYSPickerView:(KYSPickerView *)pickerView componentIndex:(NSInteger)index;
+- (NSArray *)KYSPickerView:(KYSPickerView *)pickerView dataInComponent:(NSInteger)component;
 
 @optional
 //时间pickerView无效，默认是1，可不设置
 - (NSInteger)numberOfComponentsInPickerView:(KYSPickerView *)pickerView;
 
-- (NSInteger)selectedIndexKYSPickerView:(KYSPickerView *)pickerView componentIndex:(NSInteger)index;
+- (NSInteger)KYSPickerView:(KYSPickerView *)pickerView selectedIndexInComponent:(NSInteger)component;
+
+- (NSInteger)KYSPickerView:(KYSPickerView *)pickerView widthForComponent:(NSInteger)component;
+
+- (NSInteger)KYSPickerView:(KYSPickerView *)pickerView rowHeightForComponent:(NSInteger)component;
 
 @end
 
