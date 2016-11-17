@@ -15,9 +15,6 @@
 @property(nonatomic,strong) KYSPickerView *pickerView;
 @property(nonatomic,strong) NSArray *dataArray;
 
-@property(nonatomic,strong)NSArray *componentWidthArray; //每项的宽度
-@property(nonatomic,strong)NSArray *componentHeightArray;//每项的高度
-@property(nonatomic,strong)NSMutableArray *selectedIndexArray;
 @property(nonatomic,copy)KYSLinkagePickerViewCompleteSelected completeBlock;//选择完成回调
 
 @end
@@ -28,7 +25,7 @@
 + (instancetype)KYSShowWithAnalyzeBlock:(KYSLinkagePickerViewAnalyzeOriginData)analyzeBlock
                           completeBlock:(KYSLinkagePickerViewCompleteSelected)completeBlock{
     KYSLinkagePickerView *linkagePickerView=[[KYSLinkagePickerView alloc] init];
-    [linkagePickerView setDataWithSelectedIndexArray:nil analyzeBlock:analyzeBlock];
+    [linkagePickerView setDataArrayWithAnalyzeBlock:analyzeBlock];
     linkagePickerView.completeBlock=completeBlock;
     [linkagePickerView KYSShow];
     return linkagePickerView;
@@ -44,26 +41,8 @@
     return self;
 }
 
-- (void)setDataWithSelectedIndexArray:(NSArray *)selectedIndexArray
-                         analyzeBlock:(KYSLinkagePickerViewAnalyzeOriginData) block{
+- (void)setDataArrayWithAnalyzeBlock:(KYSLinkagePickerViewAnalyzeOriginData) block{
     self.dataArray=block();
-    //未设置默认选项的，设置成-1
-    [self.selectedIndexArray removeAllObjects];
-    for (NSUInteger i=0; i<self.dataArray.count; i++) {
-        if (i<selectedIndexArray.count) {
-            [self.selectedIndexArray addObject:selectedIndexArray[i]];
-        }else{
-            [self.selectedIndexArray addObject:@(-1)];
-        }
-    }
-}
-
-- (void)setDataWithComponentWidthArray:(NSArray *)array{
-    self.componentWidthArray=array;
-}
-
-- (void)setDataWithComponentHeightArray:(NSArray *)array{
-    self.componentHeightArray=array;
 }
 
 - (void)KYSShow{
@@ -75,9 +54,9 @@
 }
 
 #pragma mark - KYSPickerViewDelegate
-- (void)KYSPickerView:(KYSPickerView *)pickerView selectedIndexArray:(NSArray *)selectedIndexArray{
+- (void)KYSPickerView:(KYSPickerView *)pickerView selectedIndexInComponents:(NSArray *)selectedIndexInComponents{
     if (self.completeBlock) {
-        self.completeBlock(selectedIndexArray);
+        self.completeBlock(selectedIndexInComponents);
     }
 }
 
@@ -92,9 +71,9 @@
         }
         //刷新后边的
         if (i==component) {
-            [self.selectedIndexArray replaceObjectAtIndex:i withObject:@(row)];
+            [self.selectedIndexInComponents replaceObjectAtIndex:i withObject:@(row)];
         }else{
-            [self.selectedIndexArray replaceObjectAtIndex:i withObject:@(-1)];
+            [self.selectedIndexInComponents replaceObjectAtIndex:i withObject:@(-1)];
         }
     }
     //最后一个component不用刷新
@@ -120,8 +99,8 @@
     
     for (NSInteger i=0; i<self.dataArray.count; i++) {
         if (i == component) {
-            if (-1==[self.selectedIndexArray[component] integerValue]) {
-                [self.selectedIndexArray replaceObjectAtIndex:component withObject:@(0)];
+            if (-1==[self.selectedIndexInComponents[component] integerValue]) {
+                [self.selectedIndexInComponents replaceObjectAtIndex:component withObject:@(0)];
             }
             break;
         }
@@ -130,28 +109,28 @@
     NSArray *cArray=self.dataArray[component];
     for (NSInteger i=0; i < component; i++) {
         //NSLog(@"%@",cArray);
-        cArray=cArray[[self.selectedIndexArray[i] integerValue]];
+        cArray=cArray[[self.selectedIndexInComponents[i] integerValue]];
     }
     return cArray;
 }
 
 //默认选中哪一项
 - (NSInteger)KYSPickerView:(KYSPickerView *)pickerView selectedIndexInComponent:(NSInteger)component{
-    //NSLog(@"默认选中哪一项 component：%ld,selected：%ld",(long)component,(long)[self.selectedIndexArray[component] integerValue]);
-    return [self.selectedIndexArray[component] integerValue];
+    //NSLog(@"默认选中哪一项 component：%ld,selected：%ld",(long)component,(long)[self.selectedIndexInComponents[component] integerValue]);
+    return [self.selectedIndexInComponents[component] integerValue];
 }
 
 - (NSInteger)KYSPickerView:(KYSPickerView *)pickerView widthForComponent:(NSInteger)component{
-    if (component<self.componentWidthArray.count) {
-        return [self.componentWidthArray[component] integerValue];
+    if (component<self.widthInComponents.count) {
+        return [self.widthInComponents[component] integerValue];
     }
     return CGRectGetWidth(self.frame)/self.dataArray.count;
 }
 
 - (NSInteger)KYSPickerView:(KYSPickerView *)pickerView rowHeightForComponent:(NSInteger)component{
     
-    if (component<self.componentHeightArray.count) {
-        return [self.componentHeightArray[component] integerValue];
+    if (component<self.heightInComponents.count) {
+        return [self.heightInComponents[component] integerValue];
     }
     return 30;
 }
@@ -167,11 +146,21 @@
     return _pickerView;
 }
 
-- (NSMutableArray *)selectedIndexArray{
-    if (!_selectedIndexArray) {
-        _selectedIndexArray=[[NSMutableArray alloc] init];
+- (NSMutableArray *)selectedIndexInComponents{
+    if (!_selectedIndexInComponents) {
+        _selectedIndexInComponents=[NSMutableArray arrayWithCapacity:self.dataArray.count];
+        for (NSInteger i=0; i<self.dataArray.count; i++) {
+            [_selectedIndexInComponents addObject:@(-1)];
+        }
+    }else{
+        //如果 selectedIndexInComponents 元素个数小于 self.dataArray.count 增加元素至 self.dataArray.count 个
+        if (_selectedIndexInComponents.count<self.dataArray.count) {
+            for (NSInteger i=_selectedIndexInComponents.count; i<self.dataArray.count; i++) {
+                [_selectedIndexInComponents addObject:@(-1)];
+            }
+        }
     }
-    return _selectedIndexArray;
+    return _selectedIndexInComponents;
 }
 
 #pragma mark - private

@@ -14,9 +14,10 @@ typedef void (^KYSLinkagePickerViewCompleteSelected)(NSArray *);
 
 @property(nonatomic,strong) NSArray *dataArray;
 
-@property(nonatomic,strong)NSArray *componentWidthArray; //每项的宽度
-@property(nonatomic,strong)NSArray *componentHeightArray;//每项的高度
-@property(nonatomic,strong)NSMutableArray *selectedIndexArray;
+@property(nonatomic,strong)NSArray *widthInComponents;                  //每项的宽度
+@property(nonatomic,strong)NSArray *heightInComponents;                 //每项的高度
+@property(nonatomic,strong)NSMutableArray *selectedIndexInComponents;   //设置默认选中项
+
 @property(nonatomic,copy)KYSLinkagePickerViewCompleteSelected completeBlock;//选择完成回调
 
 //类方法直接显示

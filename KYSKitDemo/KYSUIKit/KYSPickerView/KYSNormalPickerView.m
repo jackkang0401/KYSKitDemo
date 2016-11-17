@@ -49,9 +49,9 @@
 }
 
 #pragma mark - KYSPickerViewDelegate
-- (void)KYSPickerView:(KYSPickerView *)pickerView selectedIndexArray:(NSArray *)selectedIndexArray{
+- (void)KYSPickerView:(KYSPickerView *)pickerView selectedIndexInComponents:(NSArray *)selectedIndexInComponents{
     if (self.completeBlock) {
-        self.completeBlock(selectedIndexArray);
+        self.completeBlock(selectedIndexInComponents);
     }
 }
 
@@ -68,21 +68,21 @@
 
 //默认选中哪一项
 - (NSInteger)KYSPickerView:(KYSPickerView *)pickerView selectedIndexInComponent:(NSInteger)component{
-    //NSLog(@"默认选中哪一项 component：%ld,selected：%ld",(long)component,(long)[self.selectedIndexArray[component] integerValue]);
-    return [self.selectedIndexArray[component] integerValue];
+    //NSLog(@"默认选中哪一项 component：%ld,selected：%ld",(long)component,(long)[self.selectedIndexInComponents[component] integerValue]);
+    return [self.selectedIndexInComponents[component] integerValue];
 }
 
 - (NSInteger)KYSPickerView:(KYSPickerView *)pickerView widthForComponent:(NSInteger)component{
-    if (component<self.componentWidthArray.count) {
-        return [self.componentWidthArray[component] integerValue];
+    if (component<self.widthInComponents.count) {
+        return [self.widthInComponents[component] integerValue];
     }
     return CGRectGetWidth(self.frame)/self.dataArray.count;
 }
 
 - (NSInteger)KYSPickerView:(KYSPickerView *)pickerView rowHeightForComponent:(NSInteger)component{
     
-    if (component<self.componentHeightArray.count) {
-        return [self.componentHeightArray[component] integerValue];
+    if (component<self.heightInComponents.count) {
+        return [self.heightInComponents[component] integerValue];
     }
     return 30;
 }
@@ -98,14 +98,21 @@
     return _pickerView;
 }
 
-- (NSMutableArray *)selectedIndexArray{
-    if (!_selectedIndexArray) {
-        _selectedIndexArray=[NSMutableArray arrayWithCapacity:self.dataArray.count];
+- (NSMutableArray *)selectedIndexInComponents{
+    if (!_selectedIndexInComponents) {
+        _selectedIndexInComponents=[NSMutableArray arrayWithCapacity:self.dataArray.count];
         for (NSInteger i=0; i<self.dataArray.count; i++) {
-            [_selectedIndexArray addObject:@(0)];
+            [_selectedIndexInComponents addObject:@(0)];
+        }
+    }else{
+        //如果 selectedIndexInComponents 元素个数小于 self.dataArray.count 增加元素至 self.dataArray.count 个
+        if (_selectedIndexInComponents.count<self.dataArray.count) {
+            for (NSInteger i=_selectedIndexInComponents.count; i<self.dataArray.count; i++) {
+                [_selectedIndexInComponents addObject:@(0)];
+            }
         }
     }
-    return _selectedIndexArray;
+    return _selectedIndexInComponents;
 }
 
 #pragma mark - private
