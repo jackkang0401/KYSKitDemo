@@ -62,6 +62,7 @@
 		255C1D911DDB3206009EFD32 /* KYSLinkageData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 255C1D901DDB3206009EFD32 /* KYSLinkageData.plist */; };
 		257BF4631D7D71FA0054CC72 /* NSString+KYSEncodeAndDecode.m in Sources */ = {isa = PBXBuildFile; fileRef = 257BF4621D7D71FA0054CC72 /* NSString+KYSEncodeAndDecode.m */; };
 		257BF4681D7D78A30054CC72 /* NSString+KYSCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 257BF4671D7D78A30054CC72 /* NSString+KYSCheck.m */; };
+		258DFED91DDDDB8C00686739 /* KYSNormalPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 258DFED81DDDDB8C00686739 /* KYSNormalPickerView.m */; };
 		25FEF67B1C7AB6E7007BACFE /* KYSTimerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FEF67A1C7AB6E7007BACFE /* KYSTimerViewController.m */; };
 		25FEF67F1C7ABCD5007BACFE /* Demo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25FEF67E1C7ABCD5007BACFE /* Demo.plist */; };
 		25FEF6831C7AE1ED007BACFE /* NSTimer+KYSBlocksSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FEF6821C7AE1ED007BACFE /* NSTimer+KYSBlocksSupport.m */; };
@@ -176,6 +177,8 @@
 		257BF4621D7D71FA0054CC72 /* NSString+KYSEncodeAndDecode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+KYSEncodeAndDecode.m"; sourceTree = "<group>"; };
 		257BF4661D7D78A30054CC72 /* NSString+KYSCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+KYSCheck.h"; sourceTree = "<group>"; };
 		257BF4671D7D78A30054CC72 /* NSString+KYSCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+KYSCheck.m"; sourceTree = "<group>"; };
+		258DFED71DDDDB8C00686739 /* KYSNormalPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KYSNormalPickerView.h; sourceTree = "<group>"; };
+		258DFED81DDDDB8C00686739 /* KYSNormalPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KYSNormalPickerView.m; sourceTree = "<group>"; };
 		25FEF6791C7AB6E7007BACFE /* KYSTimerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KYSTimerViewController.h; sourceTree = "<group>"; };
 		25FEF67A1C7AB6E7007BACFE /* KYSTimerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KYSTimerViewController.m; sourceTree = "<group>"; };
 		25FEF67E1C7ABCD5007BACFE /* Demo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Demo.plist; sourceTree = "<group>"; };
@@ -527,6 +530,8 @@
 				F1410CF01DC5FD41006F8892 /* KYSPickerView.m */,
 				F1F8BAEE1DD228600024233E /* KYSLinkagePickerView.h */,
 				F1F8BAEF1DD228600024233E /* KYSLinkagePickerView.m */,
+				258DFED71DDDDB8C00686739 /* KYSNormalPickerView.h */,
+				258DFED81DDDDB8C00686739 /* KYSNormalPickerView.m */,
 			);
 			path = KYSPickerView;
 			sourceTree = "<group>";
@@ -659,6 +664,7 @@
 				2504547D1C75A5B900952C05 /* KYSNetReachabilityViewController.m in Sources */,
 				25FEF6A31C7AF668007BACFE /* UIDevice+KYSAddition.m in Sources */,
 				254210841D5336EF00DA5E78 /* UIDevice+KYSPrivateAPI.m in Sources */,
+				258DFED91DDDDB8C00686739 /* KYSNormalPickerView.m in Sources */,
 				251FD8751C7C303700AAC830 /* NSDictionary+KYSAddition.m in Sources */,
 				252E717E1C882E770026AFD8 /* BoardView.m in Sources */,
 				252E718F1C882E770026AFD8 /* KYSTransitionSampleViewController.m in Sources */,

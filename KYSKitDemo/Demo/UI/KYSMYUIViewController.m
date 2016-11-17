@@ -8,15 +8,14 @@
 
 #import "KYSMYUIViewController.h"
 #import "UITextField+KYSDeleteBackwardNotification.h"
-#import "KYSPickerView.h"
+#import "KYSNormalPickerView.h"
 #import "KYSDatePickerView.h"
 #import "KYSAlertView.h"
 #import "KYSTextView.h"
 #import "KYSLinkagePickerView.h"
 
-@interface KYSMYUIViewController()<KYSPickerViewDelegate,KYSPickerViewDataSource,KYSDatePickerViewDelegate,KYSDatePickerViewDataSource,KYSTextFieldDelegate,KYSTextViewDelegate>
+@interface KYSMYUIViewController()<KYSDatePickerViewDelegate,KYSDatePickerViewDataSource,KYSTextFieldDelegate,KYSTextViewDelegate>
 
-@property(nonatomic,strong)KYSPickerView *kPickerView;
 @property(nonatomic,strong)KYSDatePickerView *datePickerView;
 @property(nonatomic,strong)NSDictionary *pickerDataDic;
 @property(nonatomic,assign)NSInteger selectedIndex;
@@ -97,11 +96,10 @@
 - (void)btnAction:(UIButton *)btn{
     _selectedIndex=btn.tag;
     if(1==btn.tag){
-        _kPickerView = [[KYSPickerView alloc] initWithFrame:self.view.superview.bounds];
-        _kPickerView.delegate=self;
-        _kPickerView.normalDataSource=self;
-        [self.view.superview addSubview:_kPickerView];
-        [_kPickerView KYSShow];
+        //注意数据类型是数组包含数组
+        [KYSNormalPickerView KYSShowWithDataArray:@[@[@"1",@"2",@"3"]] completeBlock:^(NSArray * selectedArray) {
+            NSLog(@"%@",selectedArray);
+        }];
         return;
     }else if(2==btn.tag){
         _datePickerView = [[KYSDatePickerView alloc] initWithFrame:self.view.superview.bounds];
@@ -170,26 +168,6 @@
     NSLog(@"%ld",(long)index);
 }
 
-#pragma mark - KYSPickerViewDelegate
-- (void)KYSPickerView:(KYSPickerView *)pickerView selectedObject:(id)object{
-    NSLog(@"%@",object);
-}
-
-#pragma mark - KYSPickerViewDataSource
-- (NSInteger)numberOfComponentsInPickerView:(KYSPickerView *)pickerView{
-    return self.pickerDataDic.allKeys.count+1;
-}
-
-- (NSArray *)dataSourceKYSPickerView:(KYSPickerView *)pickerView componentIndex:(NSInteger)index{
-    return self.pickerDataDic[@(index)];
-}
-
-- (NSInteger)selectedIndexKYSPickerView:(KYSPickerView *)pickerView componentIndex:(NSInteger)index{
-    NSString *str = 0==index?@"硕士":@"1-3年";
-    NSArray *array=self.pickerDataDic[@(index)];
-    return [array indexOfObject:str];
-}
-
 #pragma mark - KYSDatePickerViewDelegate
 - (void)KYSDatePickerView:(KYSDatePickerView *)pickerView selectedObject:(id)object{
     NSLog(@"%@",object);
@@ -201,8 +179,6 @@
 
 
 #pragma mark - KYSDatePickerViewDataSource
-
-
 
 
 - (NSDictionary *)pickerDataDic{
