@@ -36,7 +36,7 @@
         //黑色半透明北京
         _selectView=[[UIView alloc] init];
         _selectView.backgroundColor=[UIColor whiteColor];
-        _selectView.frame=CGRectMake(0, self.frame.size.height-180, self.frame.size.width, 180);
+        _selectView.frame=[self hideSelectViewFrame];
         _selectView.backgroundColor=[UIColor whiteColor];
         [self addSubview:_selectView];
         
@@ -72,11 +72,11 @@
 - (void)KYSShowWithHideBlock:(KYSPickerViewHide)block{
     self.hideBlock=block;
     [self.pickView reloadAllComponents];
-    self.selectView.frame=CGRectMake(0, CGRectGetHeight(self.frame), CGRectGetWidth(self.frame), 180);
+    self.selectView.frame=[self hideSelectViewFrame];
     [UIView animateWithDuration:0.5 animations:^{
-        self.selectView.frame=CGRectMake(0, CGRectGetHeight(self.frame)-180, CGRectGetWidth(self.frame), 180);
+        self.selectView.frame=[self showSelectViewFrame];
     } completion:^(BOOL finished) {
-        //CGRectMake(0, _backView.frame.size.height-180, self.view.frame.size.width, 180)
+        self.selectView.frame=[self showSelectViewFrame];
     }];
 }
 
@@ -86,8 +86,9 @@
 
 - (void)KYSHideNeedRemove:(BOOL) needRemove{
     [UIView animateWithDuration:0.5 animations:^{
-        self.selectView.frame=CGRectMake(0, CGRectGetHeight(self.frame), CGRectGetWidth(self.frame), 180);
+        self.selectView.frame=[self hideSelectViewFrame];
     } completion:^(BOOL finished) {
+        self.selectView.frame=[self hideSelectViewFrame];
         if (needRemove) {
             [self removeFromSuperview];
         }
@@ -238,6 +239,16 @@
     return 30;
 }
 
+#pragma mark - 
+
+- (CGRect)showSelectViewFrame{
+    return CGRectMake(0, CGRectGetHeight(self.frame)-180, CGRectGetWidth(self.frame), 180);
+}
+
+- (CGRect)hideSelectViewFrame{
+    return CGRectMake(0, CGRectGetHeight(self.frame), CGRectGetWidth(self.frame), 180);
+}
+
 #pragma mark - lazy load
 - (NSMutableArray *)dataArray{
     if (!_dataArray) {
@@ -245,6 +256,5 @@
     }
     return _dataArray;
 }
-
 
 @end
