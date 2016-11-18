@@ -22,10 +22,10 @@
 
 
 + (instancetype)KYSShowWithDataArray:(NSArray *)dataArray
-                       completeBlock:(KYSLinkagePickerViewCompleteSelected)completeBlock{
+                       completeBlock:(KYSLinkagePickerViewCompleteSelectedBlock)selectedBlock{
     KYSNormalPickerView *normalPickerView=[[KYSNormalPickerView alloc] init];
     normalPickerView.dataArray=dataArray;
-    normalPickerView.completeBlock=completeBlock;
+    normalPickerView.selectedBlock=selectedBlock;
     [normalPickerView KYSShow];
     return normalPickerView;
 }
@@ -43,15 +43,16 @@
 - (void)KYSShow{
     [self.window addSubview:self];
     [self.pickerView KYSReloadData];
-    [self.pickerView KYSShowWithHideBlock:^{
+    [self.pickerView KYSShowWithHideCompleteBlock:^{
         [self removeFromSuperview];
     }];
 }
 
 #pragma mark - KYSPickerViewDelegate
 - (void)KYSPickerView:(KYSPickerView *)pickerView selectedIndexInComponents:(NSArray *)selectedIndexInComponents{
-    if (self.completeBlock) {
-        self.completeBlock(selectedIndexInComponents);
+    NSLog(@"selectedIndexInComponents:");
+    if (self.selectedBlock) {
+        self.selectedBlock(selectedIndexInComponents);
     }
 }
 

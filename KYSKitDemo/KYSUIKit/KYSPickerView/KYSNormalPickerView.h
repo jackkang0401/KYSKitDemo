@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void (^KYSLinkagePickerViewCompleteSelected)(NSArray *);
+typedef void (^KYSLinkagePickerViewCompleteSelectedBlock)(NSArray *);
 
 @interface KYSNormalPickerView : UIView
 
@@ -18,7 +18,7 @@ typedef void (^KYSLinkagePickerViewCompleteSelected)(NSArray *);
 @property(nonatomic,strong)NSArray *heightInComponents;                 //每项的高度
 @property(nonatomic,strong)NSMutableArray *selectedIndexInComponents;   //设置默认选中项
 
-@property(nonatomic,copy)KYSLinkagePickerViewCompleteSelected completeBlock;//选择完成回调
+@property(nonatomic,copy)KYSLinkagePickerViewCompleteSelectedBlock selectedBlock;//选择完成回调
 
 //类方法直接显示
 /*
@@ -27,8 +27,8 @@ typedef void (^KYSLinkagePickerViewCompleteSelected)(NSArray *);
     @[@"1",@"2",@"3"]
    ]
  */
-+ (instancetype)KYSShowWithDataArray:(NSArray *)dataArray
-                       completeBlock:(KYSLinkagePickerViewCompleteSelected)completeBlock;
++ (instancetype)KYSShowWithDataArray:(NSArray *) dataArray
+                       completeBlock:(KYSLinkagePickerViewCompleteSelectedBlock) selectedBlock;
 
 
 //显示

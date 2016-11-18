@@ -18,7 +18,7 @@
 @property (nonatomic,strong) UIView *selectView;
 @property (nonatomic,strong) UIPickerView *pickView;
 
-@property(nonatomic,copy) KYSPickerViewHide hideBlock;
+@property(nonatomic,copy) KYSPickerViewHideCompleteBlock hideBlock;
 
 @end
 
@@ -65,11 +65,7 @@
     return self;
 }
 
-- (void)KYSShow{
-    [self KYSShowWithHideBlock:nil];
-}
-
-- (void)KYSShowWithHideBlock:(KYSPickerViewHide)block{
+- (void)KYSShowWithHideCompleteBlock:(KYSPickerViewHideCompleteBlock)block{
     self.hideBlock=block;
     [self.pickView reloadAllComponents];
     self.selectView.frame=[self hideSelectViewFrame];
@@ -80,11 +76,7 @@
     }];
 }
 
-- (void)KYSHide{
-    [self KYSHideNeedRemove:YES];
-}
-
-- (void)KYSHideNeedRemove:(BOOL) needRemove{
+- (void)KYSHideNeedRemoveFromSuperView:(BOOL) needRemove{
     [UIView animateWithDuration:0.5 animations:^{
         self.selectView.frame=[self hideSelectViewFrame];
     } completion:^(BOOL finished) {
@@ -137,7 +129,7 @@
     if ([_delegate respondsToSelector:@selector(cancelWithPickerView:)]) {
         [_delegate cancelWithPickerView:self];
     }
-    [self KYSHide];
+    [self KYSHideNeedRemoveFromSuperView:NO];
 }
 
 - (void)btnAction:(UIButton *)btn{
@@ -148,7 +140,7 @@
             [_delegate cancelWithPickerView:self];
         }
     }
-    [self KYSHide];
+    [self KYSHideNeedRemoveFromSuperView:NO];
 }
 
 #pragma mark - UIPickerViewDelegate,UIPickerViewDataSource
@@ -192,14 +184,17 @@
 }
 
 - (void)p_getSelectedValue{
+    
+    NSLog(@"p_getSelectedValue");
+    
     NSMutableArray *mArray=[[NSMutableArray alloc] init];
     for (int i=0; i<self.dataArray.count; i++) {
         NSInteger row=[self.pickView selectedRowInComponent:i];
         [mArray addObject:@(row)];
     }
     //返回选择结果
-    if ([_delegate respondsToSelector:@selector(KYSPickerView:selectedIndexArray:)]) {
-        [_delegate KYSPickerView:self selectedIndexArray:mArray];
+    if ([_delegate respondsToSelector:@selector(KYSPickerView:selectedIndexInComponent:)]) {
+        [_delegate KYSPickerView:self selectedIndexInComponents:mArray];
     }
 }
 

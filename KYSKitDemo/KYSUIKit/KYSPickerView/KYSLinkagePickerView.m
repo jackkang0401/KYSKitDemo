@@ -48,7 +48,7 @@
 - (void)KYSShow{
     [self.window addSubview:self];
     [self.pickerView KYSReloadData];
-    [self.pickerView KYSShowWithHideBlock:^{
+    [self.pickerView KYSShowWithHideCompleteBlock:^{
         [self removeFromSuperview];
     }];
 }
