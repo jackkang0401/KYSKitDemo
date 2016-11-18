@@ -118,10 +118,65 @@
         }];
         [alertView KYSShow];
     }else if(4==btn.tag){
-        NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"KYSLinkageData" ofType:@"plist"];
-        NSDictionary *dic = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
-        NSArray *dataArray = dic[@"data"];
         
+//        NSArray *newArray=@[@[
+//                                @"A0_0",
+//                                @"A0_1",
+//                                @"A0_2"
+//                                ],
+//                            @[
+//                                @[@"A1_0"],
+//                                @[@"B1_0",
+//                                  @"B1_1"],
+//                                @[@"C1_0"]
+//                                ],
+//                            @[
+//                                @[
+//                                    @[@"A2_0",@"A2_1"]
+//                                    ],
+//                                @[
+//                                    @[@"B2_0",@"B2_1",@"B2_2"],
+//                                    @[@"B2+0",@"B2+1"]
+//                                    ],
+//                                @[
+//                                    @[@"C2_0",@"C2_1"]
+//                                    ]
+//                                ]
+//                            ];
+        
+        NSArray *array = @[@{@"name":@"A0_0",
+                             @"data":@[@{@"name":@"A1_0",
+                                         @"data":@[@{@"id":@"101",
+                                                     @"name":@"A2_0"},
+                                                   @{@"id":@"102",
+                                                     @"name":@"A2_1"}]//2层
+                                         }]//1层
+                             },
+                           @{@"name":@"B0_0",
+                             @"data":@[@{@"name":@"B1_0",
+                                         @"data":@[@{@"id":@"103",
+                                                     @"name":@"B2_0"},
+                                                   @{@"id":@"104",
+                                                     @"name":@"B2_1"},
+                                                   @{@"id":@"105",
+                                                     @"name":@"B2_2"}]//2层
+                                         },
+                                       @{@"name":@"B1_1",
+                                         @"data":@[@{@"id":@"106",
+                                                     @"name":@"B2+0"},
+                                                   @{@"id":@"107",
+                                                     @"name":@"B2+1"}]//2层
+                                         }]//1层
+                             },
+                           @{@"name":@"C0_0",
+                             @"data":@[@{@"name":@"C1_0",
+                                         @"data":@[@{@"id":@"108",
+                                                     @"name":@"C2_0"},
+                                                   @{@"id":@"109",
+                                                     @"name":@"C2_1"}]//2层
+                                         }]//1层
+                             }];//0层
+        NSArray *dataArray = array;
         //NSLog(@"%@",dataArray);
         //注意数据转换
         [KYSLinkagePickerView KYSShowWithAnalyzeBlock:^NSArray *() {
@@ -140,7 +195,7 @@
                     //获取3层数据
                     NSMutableArray *mArray20=[[NSMutableArray alloc] init];
                     for (NSDictionary *dic2 in dic1[@"data"]) {
-                         [mArray20 addObject:[dic2[@"name"] stringByReplacingOccurrencesOfString:@"美国悦宝园" withString:@""]];
+                         [mArray20 addObject:dic2[@"name"]];
                     }
                     [mArray10 addObject:dic1[@"name"]];
                     [mArray11 addObject:mArray20];
@@ -157,6 +212,7 @@
 //            NSLog(@"3：%@",mArray02);
             //NSLog(@"%@",@[mArray00,mArray01,mArray02]);
             return @[mArray00,mArray01,mArray02];
+            //return newArray;
         } completeBlock:^(NSArray * selectedArray) {
             NSLog(@"%@",selectedArray);
         }];

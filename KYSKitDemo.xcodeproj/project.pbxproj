@@ -59,7 +59,6 @@
 		2542107E1D532D1E00DA5E78 /* UIDevice+KYSCPU.m in Sources */ = {isa = PBXBuildFile; fileRef = 2542107D1D532D1E00DA5E78 /* UIDevice+KYSCPU.m */; };
 		254210811D532FFB00DA5E78 /* UIDevice+KYSDisk_Memory.m in Sources */ = {isa = PBXBuildFile; fileRef = 254210801D532FFB00DA5E78 /* UIDevice+KYSDisk_Memory.m */; };
 		254210841D5336EF00DA5E78 /* UIDevice+KYSPrivateAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 254210831D5336EF00DA5E78 /* UIDevice+KYSPrivateAPI.m */; };
-		255C1D911DDB3206009EFD32 /* KYSLinkageData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 255C1D901DDB3206009EFD32 /* KYSLinkageData.plist */; };
 		257BF4631D7D71FA0054CC72 /* NSString+KYSEncodeAndDecode.m in Sources */ = {isa = PBXBuildFile; fileRef = 257BF4621D7D71FA0054CC72 /* NSString+KYSEncodeAndDecode.m */; };
 		257BF4681D7D78A30054CC72 /* NSString+KYSCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 257BF4671D7D78A30054CC72 /* NSString+KYSCheck.m */; };
 		258DFED91DDDDB8C00686739 /* KYSNormalPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 258DFED81DDDDB8C00686739 /* KYSNormalPickerView.m */; };
@@ -172,7 +171,6 @@
 		254210801D532FFB00DA5E78 /* UIDevice+KYSDisk_Memory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+KYSDisk_Memory.m"; sourceTree = "<group>"; };
 		254210821D5336EF00DA5E78 /* UIDevice+KYSPrivateAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+KYSPrivateAPI.h"; sourceTree = "<group>"; };
 		254210831D5336EF00DA5E78 /* UIDevice+KYSPrivateAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+KYSPrivateAPI.m"; sourceTree = "<group>"; };
-		255C1D901DDB3206009EFD32 /* KYSLinkageData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = KYSLinkageData.plist; sourceTree = "<group>"; };
 		257BF4611D7D71FA0054CC72 /* NSString+KYSEncodeAndDecode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+KYSEncodeAndDecode.h"; sourceTree = "<group>"; };
 		257BF4621D7D71FA0054CC72 /* NSString+KYSEncodeAndDecode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+KYSEncodeAndDecode.m"; sourceTree = "<group>"; };
 		257BF4661D7D78A30054CC72 /* NSString+KYSCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+KYSCheck.h"; sourceTree = "<group>"; };
@@ -523,15 +521,14 @@
 		F1410CEE1DC5FD41006F8892 /* KYSPickerView */ = {
 			isa = PBXGroup;
 			children = (
-				255C1D901DDB3206009EFD32 /* KYSLinkageData.plist */,
-				F1F8BAEB1DD21DA30024233E /* KYSDatePickerView.h */,
-				F1F8BAEC1DD21DA30024233E /* KYSDatePickerView.m */,
 				F1410CEF1DC5FD41006F8892 /* KYSPickerView.h */,
 				F1410CF01DC5FD41006F8892 /* KYSPickerView.m */,
 				258DFED71DDDDB8C00686739 /* KYSNormalPickerView.h */,
 				258DFED81DDDDB8C00686739 /* KYSNormalPickerView.m */,
 				F1F8BAEE1DD228600024233E /* KYSLinkagePickerView.h */,
 				F1F8BAEF1DD228600024233E /* KYSLinkagePickerView.m */,
+				F1F8BAEB1DD21DA30024233E /* KYSDatePickerView.h */,
+				F1F8BAEC1DD21DA30024233E /* KYSDatePickerView.m */,
 			);
 			path = KYSPickerView;
 			sourceTree = "<group>";
@@ -623,7 +620,6 @@
 				252E719E1C882F360026AFD8 /* qq_on.png in Resources */,
 				252E719C1C882F360026AFD8 /* qq_off.png in Resources */,
 				252E71A31C882F360026AFD8 /* sina_on@2x.png in Resources */,
-				255C1D911DDB3206009EFD32 /* KYSLinkageData.plist in Resources */,
 				252E719F1C882F360026AFD8 /* qq_on@2x.png in Resources */,
 				253E60241C6048C600B51356 /* Assets.xcassets in Resources */,
 				2519725E1C7D8C8F00CAC2DA /* mask1.png in Resources */,

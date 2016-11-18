@@ -23,9 +23,7 @@ typedef void (^KYSLinkagePickerViewCompleteSelectedBlock)(NSArray *);
 //类方法直接显示
 /*
   注意数据类型是数组包含数组
-  @[
-    @[@"1",@"2",@"3"]
-   ]
+  @[@[@"1",@"2",@"3"]]
  */
 + (instancetype)KYSShowWithDataArray:(NSArray *) dataArray
                        completeBlock:(KYSLinkagePickerViewCompleteSelectedBlock) selectedBlock;
