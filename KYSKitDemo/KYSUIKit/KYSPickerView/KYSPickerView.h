@@ -11,20 +11,16 @@
 @protocol KYSPickerViewDelegate;
 @protocol KYSPickerViewDataSource;
 
-typedef void (^KYSPickerViewHideCompleteBlock)();
-
 @interface KYSPickerView : UIView
 
 @property(nonatomic,weak)id<KYSPickerViewDelegate> delegate;
 @property(nonatomic,weak)id<KYSPickerViewDataSource> normalDataSource;
 
-//frame 为父视图的frame
 - (instancetype)initWithFrame:(CGRect)frame;
 
-- (void)KYSShowWithHideCompleteBlock:(KYSPickerViewHideCompleteBlock)block;
+- (void)KYSShow;
 
-//隐藏后是否从父视图移除
-- (void)KYSHideNeedRemoveFromSuperView:(BOOL) needRemove;
+- (void)KYSHide;
 
 - (void)KYSReloadData;
 
@@ -36,11 +32,12 @@ typedef void (^KYSPickerViewHideCompleteBlock)();
 
 @optional
 
-- (void)cancelWithPickerView:(KYSPickerView *)pickerView;
+- (void)hideWithPickerView:(KYSPickerView *)pickerView;
 
-//返回选中的index数组
+//返回默认选中的index数组
 - (void)KYSPickerView:(KYSPickerView *)pickerView selectedIndexInComponents:(NSArray *)selectedIndexInComponents;
 
+//返回已选中项
 - (void)KYSPickerView:(KYSPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component;
 
 @end

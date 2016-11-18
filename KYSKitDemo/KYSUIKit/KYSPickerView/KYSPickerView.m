@@ -18,8 +18,6 @@
 @property (nonatomic,strong) UIView *selectView;
 @property (nonatomic,strong) UIPickerView *pickView;
 
-@property(nonatomic,copy) KYSPickerViewHideCompleteBlock hideBlock;
-
 @end
 
 
@@ -65,8 +63,7 @@
     return self;
 }
 
-- (void)KYSShowWithHideCompleteBlock:(KYSPickerViewHideCompleteBlock)block{
-    self.hideBlock=block;
+- (void)KYSShow{
     [self.pickView reloadAllComponents];
     self.selectView.frame=[self hideSelectViewFrame];
     [UIView animateWithDuration:0.5 animations:^{
@@ -76,26 +73,23 @@
     }];
 }
 
-- (void)KYSHideNeedRemoveFromSuperView:(BOOL) needRemove{
+- (void)KYSHide{
     [UIView animateWithDuration:0.5 animations:^{
         self.selectView.frame=[self hideSelectViewFrame];
     } completion:^(BOOL finished) {
         self.selectView.frame=[self hideSelectViewFrame];
-        if (needRemove) {
-            [self removeFromSuperview];
-        }
-        if (self.hideBlock) {
-            self.hideBlock();
+        if ([_delegate respondsToSelector:@selector(hideWithPickerView:)]) {
+            [_delegate hideWithPickerView:self];
         }
     }];
 }
 
 - (void)KYSReloadData{
     //NSLog(@"KYSReloadData");
-    //获取列数
+    //1.获取列数
     self.numberOfComponents=[self p_getNumberOfComponents];
         
-    //获取数据列表
+    //2.获取数据列表（涉及到联动，数据要动态获取）
     [self.dataArray removeAllObjects];
     for (int i=0; i<self.numberOfComponents; i++) {
         NSArray *array=[self p_getDataSourceInComponent:i];
@@ -104,13 +98,11 @@
         }
         [self.dataArray addObject:array];
     }
-    //NSLog(@"%@,%@",self.delegate,self.normalDataSource);
-    //NSLog(@"KYSReloadData：%@",self.dataArray);
         
-    //刷新数据
+    //3.刷新数据
     [_pickView reloadAllComponents];
         
-    //设置选中项Index
+    //4.设置选中项Index
     for (int i=0; i<self.dataArray.count; i++) {
         NSInteger index=[self p_getSelectedIndexInComponent:i];
         if (index>=0 && index<((NSArray *)self.dataArray[i]).count) {
@@ -126,21 +118,14 @@
 
 #pragma mark - Action
 - (void)tap{
-    if ([_delegate respondsToSelector:@selector(cancelWithPickerView:)]) {
-        [_delegate cancelWithPickerView:self];
-    }
-    [self KYSHideNeedRemoveFromSuperView:NO];
+    [self KYSHide];
 }
 
 - (void)btnAction:(UIButton *)btn{
     if(2==btn.tag){
         [self p_getSelectedValue];
-    }else if(1==btn.tag){
-        if ([_delegate respondsToSelector:@selector(cancelWithPickerView:)]) {
-            [_delegate cancelWithPickerView:self];
-        }
     }
-    [self KYSHideNeedRemoveFromSuperView:NO];
+    [self KYSHide];
 }
 
 #pragma mark - UIPickerViewDelegate,UIPickerViewDataSource
@@ -152,17 +137,17 @@
     return ((NSArray *)self.dataArray[component]).count;
 }
 
+- (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return [self.dataArray[component] objectAtIndex:row];
+}
+
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component{
     return [self p_getWidthInComponent:component];
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component{
     return [self p_getRowHeightInComponent:component];
-}
-
-- (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    return [self.dataArray[component] objectAtIndex:row];
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{

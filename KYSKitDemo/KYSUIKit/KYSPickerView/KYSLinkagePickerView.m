@@ -48,12 +48,15 @@
 - (void)KYSShow{
     [self.window addSubview:self];
     [self.pickerView KYSReloadData];
-    [self.pickerView KYSShowWithHideCompleteBlock:^{
-        [self removeFromSuperview];
-    }];
+    [self.pickerView KYSShow];
 }
 
 #pragma mark - KYSPickerViewDelegate
+- (void)hideWithPickerView:(KYSPickerView *)pickerView{
+    NSLog(@"hideWithPickerView:");
+    [self removeFromSuperview];
+}
+
 - (void)KYSPickerView:(KYSPickerView *)pickerView selectedIndexInComponents:(NSArray *)selectedIndexInComponents{
     if (self.completeBlock) {
         self.completeBlock(selectedIndexInComponents);
