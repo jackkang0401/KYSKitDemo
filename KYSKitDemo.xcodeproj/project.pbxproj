@@ -528,10 +528,10 @@
 				F1F8BAEC1DD21DA30024233E /* KYSDatePickerView.m */,
 				F1410CEF1DC5FD41006F8892 /* KYSPickerView.h */,
 				F1410CF01DC5FD41006F8892 /* KYSPickerView.m */,
-				F1F8BAEE1DD228600024233E /* KYSLinkagePickerView.h */,
-				F1F8BAEF1DD228600024233E /* KYSLinkagePickerView.m */,
 				258DFED71DDDDB8C00686739 /* KYSNormalPickerView.h */,
 				258DFED81DDDDB8C00686739 /* KYSNormalPickerView.m */,
+				F1F8BAEE1DD228600024233E /* KYSLinkagePickerView.h */,
+				F1F8BAEF1DD228600024233E /* KYSLinkagePickerView.m */,
 			);
 			path = KYSPickerView;
 			sourceTree = "<group>";
