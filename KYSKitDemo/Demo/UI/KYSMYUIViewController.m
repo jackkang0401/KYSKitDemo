@@ -14,7 +14,7 @@
 #import "KYSTextView.h"
 #import "KYSLinkagePickerView.h"
 
-@interface KYSMYUIViewController()<KYSDatePickerViewDelegate,KYSDatePickerViewDataSource,KYSTextFieldDelegate,KYSTextViewDelegate>
+@interface KYSMYUIViewController()<KYSTextFieldDelegate,KYSTextViewDelegate>
 
 @property(nonatomic,strong)KYSDatePickerView *datePickerView;
 @property(nonatomic,strong)NSDictionary *pickerDataDic;
@@ -29,7 +29,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor=[UIColor whiteColor];
-    
     
     UITextField *textField=[[UITextField alloc] init];
     textField.frame=CGRectMake(20, 100, 200, 20);
@@ -80,16 +79,6 @@
     btn3.titleLabel.font=[UIFont systemFontOfSize:15.];
     [btn3 addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn3];
-    
-    
-//    UIButton *btn3=[[UIButton alloc] init];
-//    btn3.tag=4;
-//    btn3.frame=CGRectMake(20, 300, 150, 30);
-//    btn3.backgroundColor=[UIColor blueColor];
-//    [btn3 setTitle:@"封装alertViewView" forState:UIControlStateNormal];
-//    btn3.titleLabel.font=[UIFont systemFontOfSize:15.];
-//    [btn3 addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:btn3];
 }
 
 
@@ -102,12 +91,9 @@
         }];
         return;
     }else if(2==btn.tag){
-        _datePickerView = [[KYSDatePickerView alloc] initWithFrame:self.view.superview.bounds];
-        _datePickerView.delegate=self;
-        //_kPickerView.currentDate=;
-        _datePickerView.dateDataSource=self;
-        [self.view.superview addSubview:_datePickerView];
-        [_datePickerView KYSShow];
+        [KYSDatePickerView KYSShowWithCompleteBlock:^(NSDate *date) {
+            NSLog(@"%@",date);
+        }];
     }else if(3==btn.tag){
         
         KYSAlertView *alertView=[[KYSAlertView alloc] initWithTitle:@"title"
@@ -232,10 +218,6 @@
 - (void)cancelWithDatePickerView:(KYSDatePickerView *)pickerView{
     NSLog(@"cancelWithDatePickerView:");
 }
-
-
-#pragma mark - KYSDatePickerViewDataSource
-
 
 - (NSDictionary *)pickerDataDic{
     if (!_pickerDataDic) {

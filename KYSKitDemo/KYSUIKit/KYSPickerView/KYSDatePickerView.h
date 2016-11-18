@@ -8,46 +8,24 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol KYSDatePickerViewDelegate;
-@protocol KYSDatePickerViewDataSource;
+typedef void (^KYSDatePickerViewCompleteSelectedBlock)(NSDate *);
 
 @interface KYSDatePickerView : UIView
 
-@property(nonatomic,weak)id<KYSDatePickerViewDelegate> delegate;
-@property(nonatomic,weak)id<KYSDatePickerViewDataSource> dateDataSource;
+@property (nonatomic) UIDatePickerMode datePickerMode;//默认 UIDatePickerModeDate
+@property (nonatomic, strong) NSDate *currentDate;
+@property (nonatomic, strong) NSDate *minimumDate;
+@property (nonatomic, strong) NSDate *maximumDate;
+@property(nonatomic,copy)KYSDatePickerViewCompleteSelectedBlock selectedBlock;//选择完成回调
 
++ (instancetype)KYSShowWithCompleteBlock:(KYSDatePickerViewCompleteSelectedBlock)selectedBlock;
 
-//frame 为父视图的frame
-- (instancetype)initWithFrame:(CGRect)frame;
+- (instancetype)init;
 
 - (void)KYSShow;
 
 - (void)KYSHide;
 
 - (void)KYSReloadData;
-
-@end
-
-
-@protocol KYSDatePickerViewDelegate <NSObject>
-
-@optional
-/*
- 普通类型：返回对应component的数组
- 时间类型：返回NSdate对象
- */
-- (void)KYSDatePickerView:(KYSDatePickerView *)pickerView selectedObject:(id)object;
-
-- (void)cancelWithDatePickerView:(KYSDatePickerView *)pickerView;
-
-@end
-
-//KYSPickerViewDate implementation
-@protocol KYSDatePickerViewDataSource <NSObject>
-
-@optional
-- (NSDate *)currentDateKYSDatePickerView:(KYSDatePickerView *)pickerView;
-- (NSDate *)minDateKYSDatePickerView:(KYSDatePickerView *)pickerView;
-- (NSDate *)maxDateKYSDatePickerView:(KYSDatePickerView *)pickerView;
 
 @end

@@ -11,6 +11,7 @@
 
 @interface KYSDatePickerView()
 
+@property(nonatomic,weak) UIWindow *window;
 @property (nonatomic,strong) UIView *selectView;
 @property (nonatomic,strong) UIDatePicker *datePicker;
 
@@ -19,14 +20,22 @@
 
 @implementation KYSDatePickerView
 
++ (instancetype)KYSShowWithCompleteBlock:(KYSDatePickerViewCompleteSelectedBlock)selectedBlock{
+    KYSDatePickerView *datePickerView=[[KYSDatePickerView alloc] init];
+    datePickerView.selectedBlock=selectedBlock;
+    [datePickerView KYSShow];
+    return datePickerView;
+}
 
-- (instancetype)initWithFrame:(CGRect)frame{
-    self=[super initWithFrame:frame];
+- (instancetype)init{
+    self=[super init];
     if (self) {
         self.backgroundColor=[UIColor colorWithWhite:0 alpha:0.15];
-        
+        self.frame=self.window.bounds;
         UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap)];
         [self addGestureRecognizer:tap];
+        
+        self.datePickerMode=UIDatePickerModeDate;
         
         //黑色半透明北京
         _selectView=[[UIView alloc] init];
@@ -63,41 +72,44 @@
 
 
 - (void)KYSShow{
-    self.selectView.frame=CGRectMake(0, CGRectGetHeight(self.frame), CGRectGetWidth(self.frame), 180);
+    [self.window addSubview:self];
+    self.selectView.frame=[self hideSelectViewFrame];
     [UIView animateWithDuration:0.5 animations:^{
-        self.selectView.frame=CGRectMake(0, CGRectGetHeight(self.frame)-180, CGRectGetWidth(self.frame), 180);
+        self.selectView.frame=[self showSelectViewFrame];
     } completion:^(BOOL finished) {
-        //CGRectMake(0, _backView.frame.size.height-180, self.view.frame.size.width, 180)
+        self.selectView.frame=[self showSelectViewFrame];
     }];
 }
 
 - (void)KYSHide{
     [UIView animateWithDuration:0.5 animations:^{
-        self.selectView.frame=CGRectMake(0, CGRectGetHeight(self.frame), CGRectGetWidth(self.frame), 180);
+        self.selectView.frame=[self hideSelectViewFrame];
     } completion:^(BOOL finished) {
+        self.selectView.frame=[self hideSelectViewFrame];
         [self removeFromSuperview];
     }];
 }
 
 - (void)KYSReloadData{
+    
+    _datePicker.datePickerMode=self.datePickerMode;
+    
     // 默认日期
-    _datePicker.date =[self p_getCurrentDate];
+    if (self.currentDate) {
+        _datePicker.date=self.currentDate;
+    }
     // 最小时间
-    _datePicker.minimumDate=[self p_getMinDate];
+    if (self.minimumDate) {
+        _datePicker.minimumDate=self.minimumDate;
+    }
     // 最大时间
-    _datePicker.maximumDate=[self p_getMaxDate];
-}
-
-- (void)setDateDataSource:(id<KYSDatePickerViewDataSource>)dateDataSource{
-    _dateDataSource=dateDataSource;
-    [self KYSReloadData];
+    if (self.maximumDate) {
+        _datePicker.maximumDate=self.maximumDate;
+    }
 }
 
 #pragma mark - Action
 - (void)tap{
-    if ([_delegate respondsToSelector:@selector(cancelWithDatePickerView:)]) {
-        [_delegate cancelWithDatePickerView:self];
-    }
     [self KYSHide];
 }
 
@@ -105,9 +117,7 @@
     if(2==btn.tag){
         [self p_getSelected];
     }else if(1==btn.tag){
-        if ([_delegate respondsToSelector:@selector(cancelWithDatePickerView:)]) {
-            [_delegate cancelWithDatePickerView:self];
-        }
+
     }
     [self KYSHide];
 }
@@ -117,63 +127,38 @@
 - (void)p_setPickerView{
     _datePicker = [[UIDatePicker alloc] init];
     _datePicker.frame=CGRectMake(0, 30, _selectView.frame.size.width, _selectView.frame.size.height-30);
-    _datePicker.datePickerMode = UIDatePickerModeDate;
     _datePicker.backgroundColor = [UIColor whiteColor];
     [_selectView addSubview:self.datePicker];
 }
 
 - (void)p_getSelected{
-    if ([_delegate respondsToSelector:@selector(KYSDatePickerView:selectedObject:)]) {
-        [_delegate KYSDatePickerView:self selectedObject:_datePicker.date];
+    if (self.selectedBlock) {
+        self.selectedBlock(_datePicker.date);
     }
 }
 
-//// 获取当前处于activity状态的view controller
-//- (UIViewController *)p_activityViewController{
-//    UIViewController* activityViewController = nil;
-//    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-//    if(window.windowLevel != UIWindowLevelNormal){
-//        NSArray *windows = [[UIApplication sharedApplication] windows];
-//        for(UIWindow *tmpWin in windows){
-//            if(tmpWin.windowLevel == UIWindowLevelNormal){
-//                window = tmpWin;
-//                break;
-//            }
-//        }
-//    }
-//    NSArray *viewsArray = [window subviews];
-//    if([viewsArray count] > 0){
-//        UIView *frontView = [viewsArray objectAtIndex:0];
-//        id nextResponder = [frontView nextResponder];
-//        if([nextResponder isKindOfClass:[UIViewController class]]){
-//            activityViewController = nextResponder;
-//        }else{
-//            activityViewController = window.rootViewController;
-//        }
-//    }
-//    return activityViewController;
-//}
-
-#pragma mark - KYSPickerViewDateDataSource
-- (NSDate *)p_getCurrentDate{
-    if ([_dateDataSource respondsToSelector:@selector(currentDateKYSDatePickerView:)]) {
-        return [_dateDataSource currentDateKYSDatePickerView:self];
-    }
-    return [NSDate date];
+#pragma mark -
+- (CGRect)showSelectViewFrame{
+    return CGRectMake(0, CGRectGetHeight(self.frame)-180, CGRectGetWidth(self.frame), 180);
 }
 
-- (NSDate *)p_getMinDate{
-    if ([_dateDataSource respondsToSelector:@selector(minDateKYSDatePickerView:)]) {
-        return [_dateDataSource minDateKYSDatePickerView:self];
-    }
-    return [NSDate dateWithString:@"1990-01-01 00:00" format:@"yyyy-MM-dd HH:mm"];
+- (CGRect)hideSelectViewFrame{
+    return CGRectMake(0, CGRectGetHeight(self.frame), CGRectGetWidth(self.frame), 180);
 }
 
-- (NSDate *)p_getMaxDate{
-    if ([_dateDataSource respondsToSelector:@selector(maxDateKYSDatePickerView:)]) {
-        return [_dateDataSource maxDateKYSDatePickerView:self];
+// 获取当前处于activity状态的Window
+- (UIWindow *)window{
+    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+    if(window.windowLevel != UIWindowLevelNormal){
+        NSArray *windows = [[UIApplication sharedApplication] windows];
+        for(UIWindow *tmpWin in windows){
+            if(tmpWin.windowLevel == UIWindowLevelNormal){
+                window = tmpWin;
+                break;
+            }
+        }
     }
-    return [NSDate date];
+    return window;
 }
 
 @end
