@@ -102,19 +102,6 @@
                              options:(NSRegularExpressionOptions)options
                           withString:(NSString *)replacement;
 
-
-#pragma mark - Emoji
-///=============================================================================
-/// @name Emoji
-///=============================================================================
-
-/**
- Whether the receiver contains Apple Emoji (displayed in current version of iOS).
- */
-- (BOOL)containsEmoji;
-
-- (BOOL)containsEmojiForSystemVersion:(float)systemVersion;
-
 #pragma mark - NSNumber Compatible
 ///=============================================================================
 /// @name NSNumber Compatible
@@ -287,8 +274,5 @@
  @return A new string create from the file in UTF-8 character encoding.
  */
 + (NSString *)stringNamed:(NSString *)name;
-
-#pragma mark - validate
-- (BOOL)isValidateEmail:(NSString *)Email;
 
 @end

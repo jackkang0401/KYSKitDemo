@@ -25,7 +25,6 @@ NSString *const KYS_CHECK_CHINESE_ENGLISH = @"^[A-Za-z\u4E00-\u9FA5]+$";
 
 
 
-
 @implementation NSString (KYSCheck)
 
 //密码合法性
@@ -52,7 +51,6 @@ NSString *const KYS_CHECK_CHINESE_ENGLISH = @"^[A-Za-z\u4E00-\u9FA5]+$";
 - (BOOL)isChineseAndEnglish{
     return [self p_checkWithString:KYS_CHECK_CHINESE_ENGLISH];
 }
-
 
 - (BOOL)p_checkWithString:(NSString *)string{
     NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",string];
