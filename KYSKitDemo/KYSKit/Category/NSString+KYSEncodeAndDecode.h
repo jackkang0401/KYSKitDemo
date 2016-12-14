@@ -15,6 +15,7 @@
                       signatureBlock:(NSString *(^)(NSString *base64Header,NSString *base64Paylod))signatureBlock;
 
 #pragma mark - 返回的都是小写的编码
+
 - (NSString *)md2String;
 
 - (NSString *)md4String;
@@ -47,26 +48,16 @@
 
 
 #pragma mark - Encode And Decode
+
 - (NSString *)base64EncodedString;
 
 + (NSString *)stringWithBase64EncodedString:(NSString *)base64EncodedString;
 
-/**
- URL encode a string in utf-8.
- @return the encoded string.
- */
 - (NSString *)stringByURLEncode;
 
-/**
- URL decode a string in utf-8.
- @return the decoded string.
- */
 - (NSString *)stringByURLDecode;
 
-/**
- Escape common HTML to Entity.
- Example: "a<b" will be escape to "a&lt;b".
- */
+//"a<b" will be escape to "a&lt;b".
 - (NSString *)stringByEscapingHTML;
 
 @end
