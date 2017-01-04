@@ -76,8 +76,18 @@
     return [NSDate new].day == self.day;
 }
 
-- (BOOL)isYesterday {
+- (BOOL)isTomorrow{
     NSDate *added = [self dateByAddingDays:1];
+    return [added isToday];
+}
+
+- (BOOL)isTheDayAfterTomorrow{
+    NSDate *added = [self dateByAddingDays:2];
+    return [added isToday];
+}
+
+- (BOOL)isYesterday {
+    NSDate *added = [self dateByAddingDays:-1];
     return [added isToday];
 }
 
