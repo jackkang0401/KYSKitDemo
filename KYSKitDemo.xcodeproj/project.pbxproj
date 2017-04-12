@@ -78,6 +78,7 @@
 		F1410CF91DC5FD41006F8892 /* KYSPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1410CF01DC5FD41006F8892 /* KYSPickerView.m */; };
 		F1410CFA1DC5FD41006F8892 /* UITextField+KYSDeleteBackwardNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = F1410CF31DC5FD41006F8892 /* UITextField+KYSDeleteBackwardNotification.m */; };
 		F1410CFB1DC5FD41006F8892 /* KYSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1410CF61DC5FD41006F8892 /* KYSTextView.m */; };
+		F1DC36A21E9DE2B500CD6118 /* UIDevice+KYSDeviceOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = F1DC36A11E9DE2B500CD6118 /* UIDevice+KYSDeviceOrientation.m */; };
 		F1F8BAED1DD21DA30024233E /* KYSDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1F8BAEC1DD21DA30024233E /* KYSDatePickerView.m */; };
 		F1F8BAF01DD228600024233E /* KYSLinkagePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1F8BAEF1DD228600024233E /* KYSLinkagePickerView.m */; };
 /* End PBXBuildFile section */
@@ -207,6 +208,8 @@
 		F1410CF31DC5FD41006F8892 /* UITextField+KYSDeleteBackwardNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+KYSDeleteBackwardNotification.m"; sourceTree = "<group>"; };
 		F1410CF51DC5FD41006F8892 /* KYSTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KYSTextView.h; sourceTree = "<group>"; };
 		F1410CF61DC5FD41006F8892 /* KYSTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KYSTextView.m; sourceTree = "<group>"; };
+		F1DC36A01E9DE2B500CD6118 /* UIDevice+KYSDeviceOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+KYSDeviceOrientation.h"; sourceTree = "<group>"; };
+		F1DC36A11E9DE2B500CD6118 /* UIDevice+KYSDeviceOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+KYSDeviceOrientation.m"; sourceTree = "<group>"; };
 		F1F8BAEB1DD21DA30024233E /* KYSDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KYSDatePickerView.h; sourceTree = "<group>"; };
 		F1F8BAEC1DD21DA30024233E /* KYSDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KYSDatePickerView.m; sourceTree = "<group>"; };
 		F1F8BAEE1DD228600024233E /* KYSLinkagePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KYSLinkagePickerView.h; sourceTree = "<group>"; };
@@ -458,6 +461,8 @@
 				254210831D5336EF00DA5E78 /* UIDevice+KYSPrivateAPI.m */,
 				25FEF6A11C7AF668007BACFE /* UIDevice+KYSAddition.h */,
 				25FEF6A21C7AF668007BACFE /* UIDevice+KYSAddition.m */,
+				F1DC36A01E9DE2B500CD6118 /* UIDevice+KYSDeviceOrientation.h */,
+				F1DC36A11E9DE2B500CD6118 /* UIDevice+KYSDeviceOrientation.m */,
 				2501582C1C7EA5A800A064E8 /* CALayer+KYSAddition.h */,
 				2501582D1C7EA5A800A064E8 /* CALayer+KYSAddition.m */,
 				251FD8791C7C3A0A00AAC830 /* UIView+KYSAddition.h */,
@@ -645,6 +650,7 @@
 				25FEF6961C7AF110007BACFE /* NSData+KYSAddition.m in Sources */,
 				253E60321C6049F200B51356 /* KYSNetReachability.m in Sources */,
 				250454781C75716C00952C05 /* MainViewController.m in Sources */,
+				F1DC36A21E9DE2B500CD6118 /* UIDevice+KYSDeviceOrientation.m in Sources */,
 				F1410CFB1DC5FD41006F8892 /* KYSTextView.m in Sources */,
 				251D74E81C9BFBEF00D49510 /* NSObject+KYSAddition.m in Sources */,
 				F1028FB81D563E9500631A48 /* KYSGCDTimer.m in Sources */,

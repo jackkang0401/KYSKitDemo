@@ -18,8 +18,8 @@
 
 @implementation BoardView
 
-- (void)awakeFromNib
-{
+- (void)awakeFromNib{
+    [super awakeFromNib];
     //create array
     _strokes = [NSMutableArray array];
 }

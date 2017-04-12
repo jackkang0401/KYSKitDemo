@@ -95,7 +95,6 @@
             NSLog(@"%@",date);
         }];
     }else if(3==btn.tag){
-        
         KYSAlertView *alertView=[[KYSAlertView alloc] initWithTitle:@"title"
                                                             message:@"message"
                                                        buttonTitles:@[@"btn1",@"btn2",@"btn1"]
